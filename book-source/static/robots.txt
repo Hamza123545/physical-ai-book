@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /tags/
+
+Sitemap: https://hamza123545.github.io/physical-ai-book/sitemap.xml

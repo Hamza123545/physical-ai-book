@@ -1,0 +1,291 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "React Component Prop Interfaces",
+  "description": "TypeScript interfaces for custom MDX components used in the textbook",
+  "version": "1.0.0",
+  "components": {
+    "InteractivePython": {
+      "description": "Interactive Python code editor with Pyodide execution",
+      "props": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Unique exercise identifier for progress tracking",
+          "example": "exercise-ch02-fk-3dof"
+        },
+        "title": {
+          "type": "string",
+          "required": true,
+          "description": "Exercise title displayed to students",
+          "example": "3-DOF Robot Arm Forward Kinematics"
+        },
+        "description": {
+          "type": "string",
+          "required": false,
+          "description": "Exercise instructions (markdown supported)",
+          "example": "Complete the `forward_kinematics` function to compute end-effector position from joint angles."
+        },
+        "starterCode": {
+          "type": "string",
+          "required": true,
+          "description": "Initial code template with TODO comments",
+          "example": "import numpy as np\\n\\ndef forward_kinematics(theta1, theta2, theta3, L1, L2, L3):\\n    # TODO: Implement forward kinematics\\n    pass"
+        },
+        "testCases": {
+          "type": "array",
+          "required": false,
+          "description": "Automated test cases for validation",
+          "items": {
+            "type": "object",
+            "properties": {
+              "input": {"type": "object"},
+              "expectedOutput": {"type": "any"},
+              "tolerance": {"type": "number"},
+              "description": {"type": "string"}
+            }
+          },
+          "example": [
+            {
+              "input": {"theta1": 0, "theta2": 0, "theta3": 0, "L1": 1, "L2": 1, "L3": 1},
+              "expectedOutput": {"x": 3.0, "y": 0.0},
+              "tolerance": 0.01,
+              "description": "All joints at zero should extend straight along x-axis"
+            }
+          ]
+        },
+        "hints": {
+          "type": "array",
+          "required": false,
+          "description": "Progressive hints revealed on request",
+          "items": {"type": "string"},
+          "example": [
+            "Start by computing the position of the first joint",
+            "Use trigonometry to add each link's contribution"
+          ]
+        },
+        "expectedOutput": {
+          "type": "string",
+          "required": false,
+          "description": "Example of correct output for student reference",
+          "example": "x = 2.5, y = 1.8"
+        },
+        "maxRuntime": {
+          "type": "number",
+          "required": false,
+          "default": 30,
+          "description": "Maximum execution time in seconds",
+          "example": 5
+        },
+        "requiredLibraries": {
+          "type": "array",
+          "required": false,
+          "default": [],
+          "description": "Python libraries to import (must be available in Pyodide)",
+          "items": {"type": "string", "enum": ["numpy", "matplotlib", "scipy"]},
+          "example": ["numpy", "matplotlib"]
+        },
+        "showReset": {
+          "type": "boolean",
+          "required": false,
+          "default": true,
+          "description": "Show reset button to restore starter code"
+        },
+        "showSave": {
+          "type": "boolean",
+          "required": false,
+          "default": true,
+          "description": "Save code to localStorage automatically"
+        },
+        "theme": {
+          "type": "string",
+          "required": false,
+          "default": "auto",
+          "enum": ["light", "dark", "auto"],
+          "description": "Code editor theme"
+        }
+      },
+      "usage_example": "```jsx\n<InteractivePython\n  id=\"exercise-ch02-fk-3dof\"\n  title=\"3-DOF Robot Arm Forward Kinematics\"\n  starterCode={`import numpy as np\\n\\ndef forward_kinematics(theta1, theta2, theta3, L1, L2, L3):\\n    # TODO: Implement\\n    pass`}\n  testCases={[\n    {\n      input: {theta1: 0, theta2: 0, theta3: 0, L1: 1, L2: 1, L3: 1},\n      expectedOutput: {x: 3.0, y: 0.0},\n      tolerance: 0.01\n    }\n  ]}\n  hints={[\"Use trigonometry\", \"Accumulate angles\"]}\n/>\n```"
+    },
+    "Quiz": {
+      "description": "Interactive quiz component with 50 questions, randomized batching, immediate feedback",
+      "props": {
+        "questions": {
+          "type": "array",
+          "required": true,
+          "description": "Array of 50 quiz questions",
+          "minItems": 50,
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {"type": "string", "description": "Unique question ID"},
+              "question": {"type": "string", "description": "Question text (markdown supported)"},
+              "type": {"type": "string", "enum": ["multiple-choice", "true-false"]},
+              "options": {"type": "array", "items": {"type": "string"}, "description": "Answer options (2 for true-false, 4 for multiple-choice)"},
+              "correctAnswer": {"type": "number", "description": "Index of correct option (0-based)"},
+              "explanation": {"type": "string", "description": "Why the correct answer is correct"},
+              "wrongAnswerExplanations": {"type": "array", "items": {"type": "string"}, "description": "Why each wrong answer is incorrect"}
+            }
+          }
+        },
+        "questionsPerBatch": {
+          "type": "number",
+          "required": false,
+          "default": 17,
+          "min": 15,
+          "max": 20,
+          "description": "Number of questions shown per session (randomized from 50)"
+        },
+        "shuffleQuestions": {
+          "type": "boolean",
+          "required": false,
+          "default": true,
+          "description": "Shuffle question order on each retake"
+        },
+        "showImmediateFeedback": {
+          "type": "boolean",
+          "required": false,
+          "default": true,
+          "description": "Show feedback immediately after each answer"
+        },
+        "saveProgress": {
+          "type": "boolean",
+          "required": false,
+          "default": true,
+          "description": "Save quiz progress to localStorage"
+        },
+        "chapterId": {
+          "type": "number",
+          "required": true,
+          "description": "Chapter ID for progress tracking",
+          "example": 2
+        }
+      },
+      "usage_example": "```jsx\n<Quiz\n  chapterId={2}\n  questions={[\n    {\n      id: \"q-ch02-01\",\n      question: \"What is forward kinematics?\",\n      type: \"multiple-choice\",\n      options: [\n        \"Compute joint angles from position\",\n        \"Compute position from joint angles\",\n        \"Compute dynamics\",\n        \"Compute trajectories\"\n      ],\n      correctAnswer: 1,\n      explanation: \"Forward kinematics computes end-effector position from joint angles.\",\n      wrongAnswerExplanations: [\n        \"This is inverse kinematics\",\n        \"This is dynamics\",\n        \"This is trajectory planning\"\n      ]\n    },\n    // ... 49 more questions\n  ]}\n  questionsPerBatch={17}\n/>\n```"
+    },
+    "TryWithAI": {
+      "description": "AI co-learning exercise component following AI Three Roles Framework",
+      "props": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Unique exercise ID",
+          "example": "tryai-ch02-ik"
+        },
+        "title": {
+          "type": "string",
+          "required": true,
+          "description": "Exercise title",
+          "example": "Derive Inverse Kinematics with AI Copilot"
+        },
+        "role": {
+          "type": "string",
+          "required": true,
+          "enum": ["Teacher", "Copilot", "Evaluator"],
+          "description": "AI role in this exercise"
+        },
+        "scenario": {
+          "type": "string",
+          "required": true,
+          "description": "Real-world context for the problem",
+          "example": "You need to implement inverse kinematics for a 3-DOF robot arm"
+        },
+        "yourTask": {
+          "type": "string",
+          "required": true,
+          "description": "What the student should attempt first",
+          "example": "First implement forward kinematics and test it"
+        },
+        "aiPromptTemplate": {
+          "type": "string",
+          "required": true,
+          "description": "Prompt template for students to use with AI tools",
+          "example": "I have this forward kinematics function: [paste code]. Help me derive inverse kinematics. Explain each step."
+        },
+        "successCriteria": {
+          "type": "array",
+          "required": true,
+          "items": {"type": "string"},
+          "description": "How to verify the solution works",
+          "example": [
+            "You can explain the geometric reasoning",
+            "Your code correctly computes joint angles"
+          ]
+        },
+        "reflectionQuestions": {
+          "type": "array",
+          "required": true,
+          "items": {"type": "string"},
+          "description": "Questions for students to reflect on AI collaboration",
+          "example": [
+            "What did the AI help you understand?",
+            "How did you verify the AI's suggestions?"
+          ]
+        }
+      },
+      "usage_example": "```jsx\n<TryWithAI\n  id=\"tryai-ch02-ik\"\n  title=\"Derive Inverse Kinematics with AI Copilot\"\n  role=\"Copilot\"\n  scenario=\"You need to implement inverse kinematics for a 3-DOF robot arm\"\n  yourTask=\"First implement forward kinematics and test it\"\n  aiPromptTemplate=\"I have this FK function: [paste code]. Help me derive IK equations. Explain each geometric step.\"\n  successCriteria={[\n    \"You can explain the geometric reasoning\",\n    \"Your IK code works correctly\"\n  ]}\n  reflectionQuestions={[\n    \"What geometric insight did AI provide?\",\n    \"How did you verify the derivation?\"\n  ]}\n/>\n```"
+    },
+    "LearningObjectives": {
+      "description": "Formatted list of lesson learning objectives with CEFR/Bloom's alignment",
+      "props": {
+        "objectives": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "text": {"type": "string"},
+              "blooms_level": {"type": "string", "enum": ["Remember", "Understand", "Apply", "Analyze", "Evaluate", "Create"]},
+              "assessment_method": {"type": "string"}
+            }
+          },
+          "example": [
+            {
+              "text": "Implement forward kinematics for a 3-DOF planar robot arm",
+              "blooms_level": "Apply",
+              "assessment_method": "Interactive Python exercise"
+            }
+          ]
+        },
+        "cefr_level": {
+          "type": "string",
+          "required": true,
+          "description": "CEFR proficiency level for the lesson",
+          "example": "B1"
+        }
+      },
+      "usage_example": "```jsx\n<LearningObjectives\n  cefr_level=\"B1\"\n  objectives={[\n    {\n      text: \"Implement forward kinematics for a 3-DOF planar robot arm\",\n      blooms_level: \"Apply\",\n      assessment_method: \"Interactive Python exercise\"\n    }\n  ]}\n/>\n```"
+    },
+    "Prerequisites": {
+      "description": "Checklist of prerequisite lessons with completion status",
+      "props": {
+        "prerequisites": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "lessonId": {"type": "string"},
+              "title": {"type": "string"},
+              "link": {"type": "string"}
+            }
+          },
+          "example": [
+            {
+              "lessonId": "chapter-01-lesson-02",
+              "title": "Introduction to Robot Coordinate Frames",
+              "link": "/docs/chapter-01/lesson-02"
+            }
+          ]
+        },
+        "showCompletionStatus": {
+          "type": "boolean",
+          "required": false,
+          "default": true,
+          "description": "Show checkmarks for completed prerequisites"
+        }
+      },
+      "usage_example": "```jsx\n<Prerequisites\n  prerequisites={[\n    {\n      lessonId: \"chapter-01-lesson-02\",\n      title: \"Introduction to Robot Coordinate Frames\",\n      link: \"/docs/chapter-01/lesson-02\"\n    }\n  ]}\n/>\n```"
+    }
+  }
+}

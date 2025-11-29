@@ -1,0 +1,132 @@
+.tryWithAI {
+  background: var(--ifm-color-emphasis-100);
+  border: 2px solid var(--ifm-color-primary);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+}
+
+.header {
+  margin-bottom: 1rem;
+}
+
+.roleBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+
+.roleBadge[data-role="teacher"] {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.roleBadge[data-role="copilot"] {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.roleBadge[data-role="evaluator"] {
+  background: #e8f5e9;
+  color: #388e3c;
+}
+
+.roleIcon {
+  font-size: 1.25rem;
+}
+
+.roleName {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--ifm-heading-color);
+}
+
+.roleDescription {
+  font-style: italic;
+  color: var(--ifm-color-emphasis-700);
+  margin-bottom: 1.5rem;
+  padding: 0.75rem;
+  background: var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+}
+
+.section {
+  margin: 1.5rem 0;
+}
+
+.section h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--ifm-color-primary);
+}
+
+.promptBox {
+  background: var(--ifm-code-background);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  padding: 1rem;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.875rem;
+  overflow-x: auto;
+  margin: 0.5rem 0;
+}
+
+.promptBox code {
+  background: none;
+  padding: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.hint {
+  font-size: 0.875rem;
+  color: var(--ifm-color-emphasis-600);
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+.criteriaList,
+.reflectionList {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.criteriaList li,
+.reflectionList li {
+  margin: 0.5rem 0;
+}
+
+.criteriaList li::marker {
+  color: var(--ifm-color-success);
+}
+
+.reflectionList li::marker {
+  color: var(--ifm-color-primary);
+}
+
+/* Dark mode adjustments */
+html[data-theme='dark'] .roleBadge[data-role="teacher"] {
+  background: #1565c0;
+  color: #bbdefb;
+}
+
+html[data-theme='dark'] .roleBadge[data-role="copilot"] {
+  background: #6a1b9a;
+  color: #e1bee7;
+}
+
+html[data-theme='dark'] .roleBadge[data-role="evaluator"] {
+  background: #2e7d32;
+  color: #c8e6c9;
+}
