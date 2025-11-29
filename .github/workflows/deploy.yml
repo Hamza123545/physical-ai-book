@@ -55,6 +55,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./book-source/build
           publish_branch: gh-pages
-          cname: hamza123545.github.io
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
+          keep_files: false
