@@ -1,0 +1,46 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 1: Introduction to Physical AI": {
+    "message": "Chapter 1: Introduction to Physical AI",
+    "description": "The label for category 'Chapter 1: Introduction to Physical AI' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 2: ROS 2 Fundamentals - The Robotic Nervous System": {
+    "message": "Chapter 2: ROS 2 Fundamentals - The Robotic Nervous System",
+    "description": "The label for category 'Chapter 2: ROS 2 Fundamentals - The Robotic Nervous System' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 3: The Digital Twin - Gazebo & Unity": {
+    "message": "Chapter 3: The Digital Twin - Gazebo & Unity",
+    "description": "The label for category 'Chapter 3: The Digital Twin - Gazebo & Unity' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 4: Reinforcement Learning for Robotics": {
+    "message": "Chapter 4: Reinforcement Learning for Robotics",
+    "description": "The label for category 'Chapter 4: Reinforcement Learning for Robotics' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 5: Motion Planning and Control": {
+    "message": "Chapter 5: Motion Planning and Control",
+    "description": "The label for category 'Chapter 5: Motion Planning and Control' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 6: Humanoid Robot Design and Control": {
+    "message": "Chapter 6: Humanoid Robot Design and Control",
+    "description": "The label for category 'Chapter 6: Humanoid Robot Design and Control' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 7: Vision-Language-Action (VLA)": {
+    "message": "Chapter 7: Vision-Language-Action (VLA)",
+    "description": "The label for category 'Chapter 7: Vision-Language-Action (VLA)' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.appendices": {
+    "message": "appendices",
+    "description": "The label for category 'appendices' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Appendix A: Advanced Robot Kinematics and Dynamics": {
+    "message": "Appendix A: Advanced Robot Kinematics and Dynamics",
+    "description": "The label for category 'Appendix A: Advanced Robot Kinematics and Dynamics' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Appendix B: Computer Vision Fundamentals for Robotics": {
+    "message": "Appendix B: Computer Vision Fundamentals for Robotics",
+    "description": "The label for category 'Appendix B: Computer Vision Fundamentals for Robotics' in sidebar 'tutorialSidebar'"
+  }
+}

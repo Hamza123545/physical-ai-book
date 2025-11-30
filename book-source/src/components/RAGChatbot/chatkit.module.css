@@ -1,0 +1,23 @@
+/* OpenAI ChatKit Wrapper Styles */
+
+.chatKitWrapper {
+  /* ChatKit manages its own positioning */
+  /* This wrapper ensures proper z-index and theme integration */
+  --chatkit-primary-color: var(--ifm-color-primary);
+  --chatkit-background: var(--ifm-background-color);
+  --chatkit-text-color: var(--ifm-font-color-base);
+  --chatkit-border-color: var(--ifm-color-emphasis-300);
+}
+
+/* Dark mode theme variables */
+html[data-theme='dark'] .chatKitWrapper {
+  --chatkit-primary-color: var(--ifm-color-primary-light);
+  --chatkit-background: var(--ifm-background-surface-color);
+  --chatkit-text-color: var(--ifm-font-color-base);
+  --chatkit-border-color: var(--ifm-color-emphasis-400);
+}
+
+/* Ensure ChatKit is above Docusaurus navbar */
+.chatKitWrapper :global(.chatkit-container) {
+  z-index: 1000;
+}

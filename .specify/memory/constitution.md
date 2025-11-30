@@ -437,7 +437,18 @@ backend/
 - Tests: `test_{module}.py`
 
 **Backend Features** (Hackathon Requirements):
-1. **RAG Chatbot** (Base - 100 points): FastAPI + OpenAI + Qdrant + Neon Postgres
+1. **RAG Chatbot** (Base - 100 points): 
+   - FastAPI + **OpenAI Agents SDK** (https://openai.github.io/openai-agents-python/) + Qdrant Cloud + Neon Postgres
+   - Use OpenAI Agents SDK for agentic AI: Agent with instructions, Runner for execution, Sessions for conversation history
+   - **Model Support**: Both OpenAI (GPT-4) and Gemini (via LiteLLM) - configurable via environment variables
+   - Answer questions about book content (all `book-source/docs/*.md` files)
+   - Support selected text queries: User selects text → Ask question → Answer based only on selected text
+   - Store chat history in Postgres (integrate with Agents SDK Sessions)
+   - Embed all book content into Qdrant vectors (using OpenAI embeddings)
+   - API endpoints: `/api/chat`, `/api/chat/selected-text`, `/api/chat/history`, `/api/chat/clear`, `/api/embeddings/ingest`
+   - React chatbot component embedded in Docusaurus frontend
+   - **Required**: Use `openai-agents` package, Agent class, Runner.run_sync/run_stream, Sessions for state management
+   - **Model Selection**: `USE_GEMINI=true/false`, `CHAT_MODEL=gemini/gemini-2.0-flash-exp` or `gpt-4-turbo-preview`
 2. **Better Auth** (Bonus - 50 points): Better Auth integration with user background collection
 3. **Content Personalization** (Bonus - 50 points): LLM-based content adaptation based on user background
 4. **Urdu Translation** (Bonus - 50 points): On-demand translation with caching

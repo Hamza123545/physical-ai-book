@@ -25,7 +25,19 @@
       "Bash(git log:*)",
       "Bash(test:*)",
       "Bash(powershell -Command \"''{0:N2} MB'' -f ((Get-ChildItem -Path ''D:\\physical-ai-book\\book-source\\build'' -Recurse | Measure-Object -Property Length -Sum).Sum / 1MB)\")",
-      "Bash(powershell -Command \"Get-Content ''D:\\physical-ai-book\\README.md'' | Select-Object -First 5\")"
+      "Bash(powershell -Command \"Get-Content ''D:\\physical-ai-book\\README.md'' | Select-Object -First 5\")",
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File .specify/scripts/powershell/setup-plan.ps1 -Json)",
+      "SlashCommand(/sp.implement)",
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File .specify/scripts/powershell/check-prerequisites.ps1:*)",
+      "Bash(powershell -Command:*)",
+      "Bash(for dir in config models api services utils)",
+      "Bash(do touch backend/app/$dir/__init__.py)",
+      "Bash(done)",
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File .specify/scripts/powershell/create-phr.sh.ps1 --title \"RAG Chatbot Foundation Implementation\" --stage \"green\" --feature \"main\" --json)",
+      "Bash(pip install:*)",
+      "Bash(npx docusaurus start:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)"
     ],
     "deny": [],
     "ask": []

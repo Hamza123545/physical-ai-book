@@ -71,6 +71,14 @@ const config: Config = {
         crossorigin: "anonymous",
       },
     },
+    // OpenAI ChatKit for RAG chatbot
+    {
+      tagName: "script",
+      attributes: {
+        src: "https://cdn.platform.openai.com/deployments/chatkit/chatkit.js",
+        async: "true",
+      },
+    },
     // Google Analytics 4 (GA4) - Configure with environment variable
     // See docs/ANALYTICS/ga4-setup.md for setup instructions
     ...(process.env.GA4_MEASUREMENT_ID
@@ -100,12 +108,23 @@ const config: Config = {
       : []),
   ],
 
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
-  // may want to replace "en" with "zh-Hans".
+  // Internationalization (i18n) configuration
+  // Supports English (default) and Urdu translations
   i18n: {
     defaultLocale: "en",
-    locales: ["en"],
+    locales: ["en", "ur"],
+    localeConfigs: {
+      en: {
+        label: "English",
+        direction: "ltr",
+        htmlLang: "en-US",
+      },
+      ur: {
+        label: "اردو",
+        direction: "rtl", // Right-to-left for Urdu
+        htmlLang: "ur-PK",
+      },
+    },
   },
   
   presets: [
@@ -118,6 +137,12 @@ const config: Config = {
           // Exclude .summary.md files from being rendered as pages
           // They are injected into lesson frontmatter by the summary injector plugin
           exclude: ["**/*.summary.md"],
+          // Enable i18n for docs - routeBasePath ensures consistent routing
+          routeBasePath: "docs",
+          // Ensure proper locale routing - editLocalizedFiles allows editing translated files
+          editLocalizedFiles: false,
+          showLastUpdateAuthor: false,
+          showLastUpdateTime: false,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           // beforeDefaultRemarkPlugins run BEFORE Docusaurus's internal plugins
@@ -225,6 +250,10 @@ const config: Config = {
           sidebarId: "tutorialSidebar",
           position: "left",
           label: "Book",
+        },
+        {
+          type: "localeDropdown",
+          position: "right",
         },
         {
           href: "https://github.com/Hamza123545/physical-ai-book",

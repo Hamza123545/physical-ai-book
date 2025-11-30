@@ -1,0 +1,26 @@
+{
+  "link.title.Learn": {
+    "message": "سیکھیں",
+    "description": "The title of the footer links column with title=Learn in the footer"
+  },
+  "link.title.Community": {
+    "message": "کمیونٹی",
+    "description": "The title of the footer links column with title=Community in the footer"
+  },
+  "link.title.More": {
+    "message": "مزید",
+    "description": "The title of the footer links column with title=More in the footer"
+  },
+  "copyright": {
+    "message": "کاپی رائٹ © 2025 Physical AI & Humanoid Robotics Book",
+    "description": "The footer copyright"
+  },
+  "link.title.Resources": {
+    "message": "Resources",
+    "description": "The title of the footer links column with title=Resources in the footer"
+  },
+  "link.item.label.GitHub Repository": {
+    "message": "GitHub Repository",
+    "description": "The label of footer link with label=GitHub Repository linking to https://github.com/Hamza123545/physical-ai-book"
+  }
+}

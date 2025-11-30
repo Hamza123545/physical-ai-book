@@ -1,84 +1,189 @@
-# Backend Development Guide
+# Physical AI Textbook - RAG Chatbot Backend
 
-**Workflow**: SpecKit Plus (`/sp.plan` → `/sp.implement`)
+Backend API for the RAG-based chatbot using FastAPI, Qdrant, and OpenAI GPT-4.
 
----
+## 🎯 Implementation Status: 18/80 Tasks Complete (22.5%)
 
-## Quick Start
+### ✅ Complete
+- **Phase 1**: Setup & Project Structure (100%)
+- **Phase 2**: Foundational Infrastructure (100%)
+  - Database models and migrations
+  - Qdrant Cloud integration
+  - OpenAI client setup
+  - Rate limiting middleware
 
-### Step 1: Read Constitution
-Read `backend/constitution.md` - yeh backend development ke principles hain.
+### 🚧 In Progress
+- **Phase 3**: Embeddings Ingestion (37.5%)
+  - ✅ Markdown processor with chunking
+  - ⏳ OpenAI embedding service
+  - ⏳ Ingestion endpoint
 
-### Step 2: Plan (SpecKit Plus)
-1. Copy prompt from `backend/PLAN-PROMPTS.md`
-2. Run `/sp.plan` in Claude Code
-3. Paste prompt when asked
-4. Get detailed implementation plan
+See `IMPLEMENTATION_STATUS.md` for detailed progress.
 
-### Step 3: Implement (SpecKit Plus)
-1. Copy phase prompt from `backend/IMPLEMENT-PROMPTS.md`
-2. Run `/sp.implement` in Claude Code
-3. Paste prompt when asked
-4. Claude will implement that phase
+## 🚀 Quick Start
 
-### Step 4: Repeat
-Move to next phase, repeat Step 3
+### Prerequisites
+- Python 3.11+
+- Neon Postgres database
+- Qdrant Cloud account
+- OpenAI API key
 
----
+### 1. Install Dependencies
 
-## Files Structure
+```bash
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+### 2. Configure Environment
+
+Copy `.env.example` to `.env` and configure:
+
+```env
+DATABASE_URL=postgresql://user:pass@host:5432/dbname
+QDRANT_URL=https://your-cluster.qdrant.io
+QDRANT_API_KEY=your-qdrant-api-key
+OPENAI_API_KEY=sk-your-openai-key
+ENVIRONMENT=development
+LOG_LEVEL=INFO
+CORS_ORIGINS=http://localhost:3000,https://your-site.github.io
+```
+
+### 3. Run Database Migrations
+
+```bash
+alembic upgrade head
+```
+
+### 4. Start Development Server
+
+```bash
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+API will be available at: http://localhost:8000
+API docs (Swagger): http://localhost:8000/docs
+
+## 📂 Project Structure
 
 ```
 backend/
-├── constitution.md          # Backend principles (READ FIRST)
-├── PLAN-PROMPTS.md          # Plan prompts (copy-paste in Claude)
-├── IMPLEMENT-PROMPTS.md     # Implement prompts (phase by phase)
-└── README.md               # This file
+├── app/
+│   ├── main.py              # FastAPI application entry point
+│   ├── config.py            # Configuration and client initialization
+│   ├── api/                 # API route handlers
+│   │   └── __init__.py
+│   ├── models/              # Database and Pydantic models
+│   │   ├── chat_history.py  # SQLAlchemy models
+│   │   └── schemas.py       # Pydantic request/response schemas
+│   ├── services/            # Business logic
+│   │   └── embeddings_service.py  # Qdrant operations
+│   └── utils/               # Utilities
+│       ├── logger.py        # Structured logging
+│       └── markdown_processor.py  # MDX parsing & chunking
+├── alembic/                 # Database migrations
+│   ├── versions/
+│   └── env.py
+├── requirements.txt
+├── .env.example
+└── README.md
 ```
 
----
+## 🔧 Configuration
 
-## Features
+### Database Models
+- **ChatSession**: Groups related messages
+- **ChatMessage**: Individual messages with RAG context
 
-1. **Feature 1**: RAG Chatbot (Base - 100 points)
-2. **Feature 3**: Better Auth + User Background (Bonus - 50 points)
-3. **Feature 4**: Content Personalization (Bonus - 50 points)
-4. **Feature 5**: Urdu Translation (Bonus - 50 points)
+### API Schemas
+- Request/response validation with Pydantic
+- Automatic OpenAPI documentation
 
-**Note**: Feature 2 (Subagents) already complete ✅
+### Services
+- **Embeddings Service**: Qdrant vector operations
+- **Markdown Processor**: MDX parsing and chunking (512 tokens, 100 overlap)
 
----
+## 🌐 API Endpoints (Planned)
 
-## Workflow Example
+### Health & Info
+- `GET /` - Service status
+- `GET /health` - Detailed health check
 
+### Embeddings (In Progress)
+- `POST /api/embeddings/ingest` - Ingest book content
+
+### Chat (Pending)
+- `POST /api/chat` - General chat query
+- `POST /api/chat/selected-text` - Context-specific query
+- `GET /api/chat/history/{session_id}` - Get chat history
+- `POST /api/chat/clear` - Clear chat history
+
+## 🛠️ Development
+
+### Run Tests
+```bash
+pytest
 ```
-1. Read: backend/constitution.md
-2. Plan: /sp.plan → Copy from PLAN-PROMPTS.md → Paste prompt
-3. Implement Phase 1: /sp.implement → Copy from IMPLEMENT-PROMPTS.md → Paste prompt
-4. Test: Review code, test functionality
-5. Implement Phase 2: /sp.implement → Copy next phase → Paste prompt
-6. Repeat until all phases complete
+
+### Check Logs
+Logs are structured JSON for easy parsing:
+```json
+{
+  "timestamp": "2025-01-29T12:00:00Z",
+  "level": "INFO",
+  "message": "Request processed",
+  "endpoint": "/api/chat",
+  "duration_ms": 245.3
+}
 ```
 
----
+### Database Migrations
+```bash
+# Create new migration
+alembic revision --autogenerate -m "Description"
 
-## SpecKit Plus Commands
+# Apply migrations
+alembic upgrade head
 
-- **Plan**: `/sp.plan` - Generate implementation plan
-- **Implement**: `/sp.implement` - Implement a phase
+# Rollback
+alembic downgrade -1
+```
 
-**Note**: We skip `/sp.specify` and `/sp.clarify` to save tokens. Constitution already defines principles.
+## 📊 Next Implementation Steps
 
----
+1. **Complete Embeddings Ingestion** (T019-T023)
+   - Add OpenAI embedding batch processing
+   - Create ingestion API endpoint
+   - Test with book content
 
-## Benefits
+2. **Implement RAG Chat** (T024-T033)
+   - Vector similarity search
+   - GPT-4 response generation
+   - Source citation extraction
 
-✅ **Token Saving**: Skip specify/clarify, only plan/implement  
-✅ **SpecKit Plus**: Uses proper workflow with history tracking  
-✅ **Organized**: Phase-by-phase implementation  
-✅ **Constitution-Based**: All code follows backend principles
+3. **Build Frontend Integration** (T045-T056)
+   - React chatbot component
+   - WebSocket or polling for real-time updates
+   - Docusaurus theme integration
 
----
+## 🐛 Troubleshooting
 
-**Start with**: `backend/constitution.md` → `backend/PLAN-PROMPTS.md` → `backend/IMPLEMENT-PROMPTS.md`
+### Database Connection Issues
+- Verify DATABASE_URL is correct
+- Check Neon dashboard for connection limits
+- Test connection: `psql $DATABASE_URL`
 
+### Qdrant Errors
+- Verify API key and URL
+- Check Qdrant dashboard for collection
+- Ensure collection exists before searching
+
+### OpenAI Rate Limits
+- Monitor usage in OpenAI dashboard
+- Adjust rate limiting in config.py
+- Consider caching embeddings
+
+## 📝 License
+
+Part of the Physical AI & Humanoid Robotics Textbook project.

@@ -16,8 +16,7 @@
       ],
       "env": {}
     }
-  },  
-  
+  },
   "mcpPackages":
   {
    "Better Auth": {
