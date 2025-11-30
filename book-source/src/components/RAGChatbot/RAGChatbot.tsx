@@ -139,14 +139,23 @@ export default function RAGChatbot() {
     setIsOpen((prev) => !prev);
   };
 
+  // Prevent event propagation issues
+  const handleButtonClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleChat();
+  };
+
   return (
     <>
       {/* Floating Chat Button */}
       <button
         className={styles.floatingButton}
-        onClick={toggleChat}
+        onClick={handleButtonClick}
+        onMouseDown={(e) => e.stopPropagation()}
         aria-label="Toggle chatbot"
         title="Ask questions about the textbook"
+        type="button"
       >
         {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
       </button>

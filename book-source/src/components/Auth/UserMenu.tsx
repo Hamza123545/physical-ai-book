@@ -7,11 +7,13 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
+import UserProfileModal from '../UserProfile/UserProfileModal';
 import styles from './Auth.module.css';
 
 const UserMenu: React.FC = () => {
   const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   // Close menu when clicking outside
@@ -96,6 +98,36 @@ const UserMenu: React.FC = () => {
 
           <div className={styles.userMenuActions}>
             <button
+              onClick={() => {
+                setShowProfile(true);
+                setIsOpen(false);
+              }}
+              className={styles.profileButton}
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className={styles.profileIcon}
+              >
+                <path
+                  d="M8 8C10.2091 8 12 6.20914 12 4C12 1.79086 10.2091 0 8 0C5.79086 0 4 1.79086 4 4C4 6.20914 5.79086 8 8 8Z"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M0 14C0 11.2386 2.23858 9 5 9H11C13.7614 9 16 11.2386 16 14"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+              Profile Settings
+            </button>
+            <button
               onClick={handleLogout}
               className={styles.logoutButton}
             >
@@ -126,6 +158,11 @@ const UserMenu: React.FC = () => {
           </div>
         </div>
       )}
+
+      <UserProfileModal
+        isOpen={showProfile}
+        onClose={() => setShowProfile(false)}
+      />
     </div>
   );
 };

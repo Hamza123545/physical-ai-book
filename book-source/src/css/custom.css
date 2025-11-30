@@ -743,3 +743,18 @@ pre code {
    DOC PAGES STYLING - Premium enhancements for chapter pages
    ============================================================================ */
 @import "./doc-pages.css";
+
+/* ============================================================================
+   CHAT BUTTON FIX - Ensure chat button is always clickable in production
+   ============================================================================ */
+.floatingButton {
+  z-index: 9999 !important;
+  pointer-events: auto !important;
+  position: fixed !important;
+}
+
+.chatWindow {
+  z-index: 9998 !important;
+  pointer-events: auto !important;
+  position: fixed !important;
+}

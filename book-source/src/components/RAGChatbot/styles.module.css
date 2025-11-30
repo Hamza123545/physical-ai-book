@@ -17,7 +17,8 @@
   justify-content: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
-  z-index: 1000;
+  z-index: 9999 !important;
+  pointer-events: auto !important;
 }
 
 .floatingButton:hover {
@@ -43,9 +44,10 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
-  z-index: 999;
+  z-index: 9998 !important;
   overflow: hidden;
   border: 1px solid var(--ifm-color-emphasis-200);
+  pointer-events: auto !important;
 }
 
 /* Header */

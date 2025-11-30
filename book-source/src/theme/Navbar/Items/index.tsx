@@ -7,7 +7,6 @@
 import React, { useEffect, useRef } from 'react';
 import NavbarItems from '@theme-original/Navbar/Items';
 import AuthButtons from '@/components/Auth/AuthButtons';
-import { AuthProvider } from '@/contexts/AuthContext';
 import { createRoot, Root } from 'react-dom/client';
 import styles from './styles.module.css';
 
@@ -33,7 +32,12 @@ export default function NavbarItemsWrapper(props: any) {
       }
 
       if (rightItems && !injectedRef.current) {
-        console.log('Found right navbar items, injecting auth buttons...');
+        // Check if already injected
+        const existing = rightItems.querySelector('[data-auth-buttons]');
+        if (existing) {
+          injectedRef.current = true;
+          return;
+        }
         
         // Create container for auth buttons
         const authContainer = document.createElement('div');
@@ -46,25 +50,19 @@ export default function NavbarItemsWrapper(props: any) {
         
         // Append to right items
         rightItems.appendChild(authContainer);
-        console.log('Auth buttons container added to navbar');
         
-        // Render AuthButtons wrapped in AuthProvider into the container
+        // Render AuthButtons into the container
+        // Note: AuthButtons already uses useAuth, so it must be within AuthProvider
+        // Since Root.tsx wraps everything with AuthProvider, this should work
         try {
           const root = createRoot(authContainer);
-          root.render(
-            <AuthProvider>
-              <AuthButtons />
-            </AuthProvider>
-          );
+          root.render(<AuthButtons />);
           rootRef.current = root;
           containerRef.current = authContainer;
           injectedRef.current = true;
-          console.log('Auth buttons rendered successfully');
         } catch (error) {
           console.error('Error rendering auth buttons:', error);
         }
-      } else if (!rightItems) {
-        console.log('Right navbar items not found yet, retrying...');
       }
     };
 
@@ -74,7 +72,8 @@ export default function NavbarItemsWrapper(props: any) {
       setTimeout(findAndInject, 100),
       setTimeout(findAndInject, 500),
       setTimeout(findAndInject, 1000),
-      setTimeout(findAndInject, 2000)
+      setTimeout(findAndInject, 2000),
+      setTimeout(findAndInject, 3000)
     ];
 
     // Also use MutationObserver to watch for navbar changes
