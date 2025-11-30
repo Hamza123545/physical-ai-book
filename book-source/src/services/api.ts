@@ -16,9 +16,10 @@ export const getApiBaseUrl = (): string => {
     return 'http://localhost:8000';
   }
   
-  // Production: Use environment variable or default to Render backend
-  const prodUrl = process.env.REACT_APP_API_URL || 'https://physical-ai-backend-9lxv.onrender.com';
-  return prodUrl;
+  // Production: Use Render backend URL
+  // Note: In Docusaurus, we can't use process.env in client-side code
+  // Environment variables should be set at build time via docusaurus.config.ts
+  return 'https://physical-ai-backend-9lxv.onrender.com';
 };
 
 export const API_BASE_URL = getApiBaseUrl();
