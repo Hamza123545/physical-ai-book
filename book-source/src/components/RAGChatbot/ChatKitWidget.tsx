@@ -18,7 +18,13 @@ export default function ChatKitWidget() {
         console.log('[ChatKit] Requesting client secret', { existing });
 
         try {
-          const response = await fetch('http://localhost:8000/api/chatkit/session', {
+          // Use production backend URL or localhost for development
+          const apiUrl = (typeof window !== 'undefined' && 
+            (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'))
+            ? 'http://localhost:8000'
+            : 'https://physical-ai-backend-9lxv.onrender.com';
+          
+          const response = await fetch(`${apiUrl}/api/chatkit/session`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

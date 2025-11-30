@@ -27,10 +27,8 @@ const getApiBaseUrl = (): string => {
     return 'http://localhost:8000';
   }
   
-  // Production: Use relative URL or your production backend URL
-  // For now, default to localhost (update this with your production backend URL)
-  // Example: return 'https://your-backend-api.com';
-  return 'http://localhost:8000'; // TODO: Update with production backend URL
+  // Production: Use Render backend URL
+  return 'https://physical-ai-backend-9lxv.onrender.com';
 };
 
 const API_BASE_URL = getApiBaseUrl();

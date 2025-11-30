@@ -16,9 +16,8 @@ export const getApiBaseUrl = (): string => {
     return 'http://localhost:8000';
   }
   
-  // Production: Use environment variable or default
-  // You can set this via environment variable in production
-  const prodUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+  // Production: Use environment variable or default to Render backend
+  const prodUrl = process.env.REACT_APP_API_URL || 'https://physical-ai-backend-9lxv.onrender.com';
   return prodUrl;
 };
 

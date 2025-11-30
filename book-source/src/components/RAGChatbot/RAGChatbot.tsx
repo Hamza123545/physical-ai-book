@@ -102,7 +102,7 @@ export default function RAGChatbot() {
       const errorMessage: ChatMessage = {
         id: `error-${Date.now()}`,
         role: 'assistant',
-        content: 'Sorry, I encountered an error. Please make sure the backend server is running at http://localhost:8000.',
+        content: 'Sorry, I encountered an error. Please check if the backend server is accessible.',
         timestamp: new Date(),
       };
 

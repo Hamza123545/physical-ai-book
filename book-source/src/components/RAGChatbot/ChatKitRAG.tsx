@@ -20,7 +20,7 @@ const getApiBaseUrl = (): string => {
     return 'http://localhost:8000';
   }
   
-  return 'http://localhost:8000'; // TODO: Update with production backend URL
+  return 'https://physical-ai-backend-9lxv.onrender.com';
 };
 
 const API_BASE_URL = getApiBaseUrl();
