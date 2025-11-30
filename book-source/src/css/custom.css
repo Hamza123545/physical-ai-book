@@ -175,6 +175,41 @@ pre code {
     font-weight: 500;
 }
 
+/* Auth buttons in navbar - ensure proper spacing */
+.navbar__items--right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Ensure auth buttons container is properly positioned */
+.authButtonsContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Make sure auth buttons appear in the navbar items flow */
+.navbar__items .authButtonsContainer {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0.5rem;
+}
+
+/* Ensure auth buttons wrapper is visible */
+.authButtonsWrapper {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+/* Make sure it appears in right navbar items */
+.navbar__items--right .authButtonsWrapper {
+    display: inline-flex !important;
+    align-items: center;
+}
+
 /* Card backgrounds */
 .card {
     border-radius: 12px;

@@ -1,0 +1,26 @@
+/* Auth Buttons Wrapper in Navbar Items */
+.authButtonsWrapper {
+  display: flex !important;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+/* Ensure visibility */
+.authButtonsWrapper * {
+  display: flex;
+  align-items: center;
+}
+
+/* Mobile responsive */
+@media (max-width: 996px) {
+  .authButtonsWrapper {
+    margin-left: 0;
+    margin-top: 0.5rem;
+    width: 100%;
+    justify-content: flex-start;
+    display: flex !important;
+  }
+}
+

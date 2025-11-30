@@ -15,6 +15,7 @@
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "serve:i18n": "npm run build && npm run serve",
+    "dev:i18n": "npm run build && npm run serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "translate:urdu": "node scripts/translate-to-urdu.js",

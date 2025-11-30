@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
+import { personalizeContent } from '../../services/personalizationApi';
 import styles from './PersonalizeButton.module.css';
 
 interface PersonalizeButtonProps {
@@ -7,40 +9,21 @@ interface PersonalizeButtonProps {
 }
 
 const PersonalizeButton: React.FC<PersonalizeButtonProps> = ({ chapterId, onPersonalized }) => {
+  const { isAuthenticated } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handlePersonalize = async () => {
+    if (!isAuthenticated) {
+      setError('Please sign in to personalize content');
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
 
     try {
-      // Get JWT token from localStorage (assuming Better Auth stores it there)
-      const token = localStorage.getItem('authToken');
-
-      if (!token) {
-        setError('Please sign in to personalize content');
-        setIsLoading(false);
-        return;
-      }
-
-      const response = await fetch('http://localhost:8000/api/content/personalize', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          chapter_id: chapterId,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error?.message || 'Personalization failed');
-      }
-
-      const data = await response.json();
+      const data = await personalizeContent(chapterId);
 
       if (data.success) {
         onPersonalized(data.personalized_content, {

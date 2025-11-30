@@ -6,28 +6,11 @@
  */
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { signin, signup, getCurrentUser, type User, type AuthTokens } from '../services/authApi';
+import { getAuthToken } from '../services/api';
 
-// API base URL
-const API_BASE_URL = 'http://localhost:8000';
-
-// User interface matching backend UserResponse
-interface User {
-  id: string;
-  email: string;
-  full_name: string | null;
-  is_active: boolean;
-  is_verified: boolean;
-  created_at: string;
-  updated_at: string;
-}
-
-// Auth tokens interface
-interface AuthTokens {
-  access_token: string;
-  refresh_token?: string;
-  token_type: string;
-  expires_in: number;
-}
+// Re-export types from authApi
+export type { User, AuthTokens } from '../services/authApi';
 
 // Auth context interface
 interface AuthContextType {
@@ -60,25 +43,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Check for existing auth on mount
   useEffect(() => {
     const initAuth = async () => {
-      const storedToken = localStorage.getItem('authToken');
+      const storedToken = getAuthToken();
 
       if (storedToken) {
         try {
           // Verify token by fetching user profile
-          const response = await fetch(`${API_BASE_URL}/auth/me`, {
-            headers: {
-              'Authorization': `Bearer ${storedToken}`,
-            },
-          });
-
-          if (response.ok) {
-            const userData = await response.json();
-            setUser(userData);
-            setToken(storedToken);
-          } else {
-            // Token invalid, clear it
-            localStorage.removeItem('authToken');
-          }
+          const userData = await getCurrentUser();
+          setUser(userData);
+          setToken(storedToken);
         } catch (err) {
           console.error('Failed to verify stored token:', err);
           localStorage.removeItem('authToken');
@@ -97,19 +69,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setError(null);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/signin`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error?.message || 'Login failed');
-      }
+      const data = await signin({ email, password });
 
       // Store token
       localStorage.setItem('authToken', data.tokens.access_token);
@@ -127,28 +87,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   // Signup function
-  const signup = async (email: string, password: string, full_name?: string) => {
+  const signupUser = async (email: string, password: string, full_name?: string) => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          password,
-          full_name: full_name || null,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error?.message || 'Signup failed');
-      }
+      const data = await signup({ email, password, full_name });
 
       // Store token
       localStorage.setItem('authToken', data.tokens.access_token);
@@ -185,7 +129,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     isLoading,
     error,
     login,
-    signup,
+    signup: signupUser,
     logout,
     clearError,
   };
