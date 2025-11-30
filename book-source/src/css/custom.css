@@ -747,14 +747,37 @@ pre code {
 /* ============================================================================
    CHAT BUTTON FIX - Ensure chat button is always clickable in production
    ============================================================================ */
-.floatingButton {
+/* Global styles for chat button - works even if CSS modules fail */
+button[class*="floatingButton"],
+.floatingButton,
+[data-chat-button] {
   z-index: 9999 !important;
+  pointer-events: auto !important;
+  position: fixed !important;
+  cursor: pointer !important;
+  touch-action: manipulation !important;
+}
+
+.chatWindow,
+[class*="chatWindow"] {
+  z-index: 9998 !important;
   pointer-events: auto !important;
   position: fixed !important;
 }
 
-.chatWindow {
-  z-index: 9998 !important;
-  pointer-events: auto !important;
-  position: fixed !important;
+/* Ensure no other elements block the chat button */
+body > *:not(.floatingButton):not([class*="floatingButton"]):not([data-chat-button]) {
+  pointer-events: auto;
+}
+
+/* Mobile touch fix */
+@media (max-width: 768px) {
+  button[class*="floatingButton"],
+  .floatingButton,
+  [data-chat-button] {
+    width: 56px !important;
+    height: 56px !important;
+    bottom: 1.5rem !important;
+    right: 1.5rem !important;
+  }
 }

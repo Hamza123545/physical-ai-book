@@ -44,6 +44,27 @@ export default function RAGChatbot() {
     }
   }, []);
 
+  // Ensure button is always clickable in production - re-attach event listeners if needed
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const button = document.querySelector('[data-chat-button]') as HTMLButtonElement;
+    if (button) {
+      // Force re-attach click handler as fallback
+      const handleClick = (e: Event) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsOpen((prev) => !prev);
+      };
+
+      button.addEventListener('click', handleClick, { capture: true });
+      
+      return () => {
+        button.removeEventListener('click', handleClick, { capture: true });
+      };
+    }
+  }, []);
+
   // Auto-scroll to latest message
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -139,8 +160,21 @@ export default function RAGChatbot() {
     setIsOpen((prev) => !prev);
   };
 
-  // Prevent event propagation issues
+  // Prevent event propagation issues - more robust for production
   const handleButtonClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+    toggleChat();
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
     e.preventDefault();
     e.stopPropagation();
     toggleChat();
@@ -152,10 +186,19 @@ export default function RAGChatbot() {
       <button
         className={styles.floatingButton}
         onClick={handleButtonClick}
-        onMouseDown={(e) => e.stopPropagation()}
+        onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
         aria-label="Toggle chatbot"
         title="Ask questions about the textbook"
         type="button"
+        data-chat-button="true"
+        style={{
+          zIndex: 9999,
+          pointerEvents: 'auto',
+          position: 'fixed',
+          bottom: '2rem',
+          right: '2rem',
+        }}
       >
         {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
       </button>
