@@ -4,7 +4,7 @@
  * Features: session persistence, source citations, markdown rendering
  */
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { MessageCircle, X, Send, Trash2, Loader2, BookOpen, Sparkles } from 'lucide-react';
 import type { ChatMessage, SourceCitation } from '../../types/chat';
@@ -156,9 +156,9 @@ export default function RAGChatbot() {
     }
   };
 
-  const toggleChat = () => {
+  const toggleChat = useCallback(() => {
     setIsOpen((prev) => !prev);
-  };
+  }, []);
 
   // Prevent event propagation issues - more robust for production
   const handleButtonClick = (e: React.MouseEvent) => {
@@ -175,6 +175,7 @@ export default function RAGChatbot() {
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
+    // Use non-passive listener to allow preventDefault
     e.preventDefault();
     e.stopPropagation();
     toggleChat();
@@ -187,7 +188,6 @@ export default function RAGChatbot() {
         className={styles.floatingButton}
         onClick={handleButtonClick}
         onMouseDown={handleMouseDown}
-        onTouchStart={handleTouchStart}
         aria-label="Toggle chatbot"
         title="Ask questions about the textbook"
         type="button"
@@ -198,6 +198,17 @@ export default function RAGChatbot() {
           position: 'fixed',
           bottom: '2rem',
           right: '2rem',
+          touchAction: 'manipulation', // Prevents passive listener warning
+        }}
+        ref={(button) => {
+          // Add non-passive touch event listener directly to DOM
+          if (button && typeof window !== 'undefined') {
+            button.addEventListener('touchstart', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleChat();
+            }, { passive: false });
+          }
         }}
       >
         {isOpen ? <X size={24} /> : <MessageCircle size={24} />}

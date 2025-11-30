@@ -44,20 +44,51 @@ if is_development:
     )
 else:
     # Production: Use specific origins
-    env_origins = os.getenv("CORS_ORIGINS", "").split(",")
-    env_origins = [origin.strip() for origin in env_origins if origin.strip()]
+    env_origins_str = os.getenv("CORS_ORIGINS", "")
+    env_origins = []
+    if env_origins_str:
+        # Parse and clean origins - remove paths and trailing slashes
+        for origin in env_origins_str.split(","):
+            origin = origin.strip()
+            if origin:
+                # Remove trailing slash
+                origin = origin.rstrip("/")
+                # Extract just protocol + domain (remove path if present)
+                # e.g., "https://hamza123545.github.io/physical-ai-book" -> "https://hamza123545.github.io"
+                try:
+                    from urllib.parse import urlparse
+                    parsed = urlparse(origin)
+                    # Reconstruct with just scheme and netloc (no path)
+                    clean_origin = f"{parsed.scheme}://{parsed.netloc}"
+                    env_origins.append(clean_origin)
+                except Exception:
+                    # Fallback: just use the origin as-is if parsing fails
+                    env_origins.append(origin)
     
-    if not env_origins:
-        # Fallback to default if not configured
-        env_origins = ["http://localhost:3000"]
+    # Default production origins (GitHub Pages frontend)
+    # IMPORTANT: CORS origin is just protocol + domain, NOT the path
+    # Browser sends: https://hamza123545.github.io (not the /physical-ai-book path)
+    default_origins = [
+        "https://hamza123545.github.io",
+    ]
+    
+    # Combine environment origins with defaults (avoid duplicates)
+    all_origins = list(set(env_origins + default_origins))
+    
+    # Log for debugging
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.info(f"CORS configuration - Environment: {is_development}, Allowed origins: {all_origins}")
+    print(f"CORS allowed origins: {all_origins}")
     
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=env_origins,
+        allow_origins=all_origins,
         allow_credentials=True,
         allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
         allow_headers=["*"],
         expose_headers=["*"],
+        max_age=3600,  # Cache preflight for 1 hour
     )
 
 
