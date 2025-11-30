@@ -1,0 +1,1 @@
+if(void 0===__webpack_require__)var __webpack_require__={};(globalThis.webpackChunkwebsite=globalThis.webpackChunkwebsite||[]).push([[1235],{8552:e=>{e.exports=JSON.parse('{"name":"docusaurus-plugin-content-pages","id":"default"}')}}]);
