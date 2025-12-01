@@ -64,10 +64,28 @@ export const apiRequest = async (
     ...(options.headers || {}),
   };
   
+  // Log request for debugging (only in development)
+  if (process.env.NODE_ENV === 'development') {
+    console.log('API Request:', {
+      url,
+      method: options.method || 'GET',
+      hasAuth: !!headers['Authorization'],
+    });
+  }
+  
   const response = await fetch(url, {
     ...options,
     headers: mergedHeaders,
   });
+  
+  // Log response status for debugging
+  if (process.env.NODE_ENV === 'development') {
+    console.log('API Response:', {
+      url,
+      status: response.status,
+      statusText: response.statusText,
+    });
+  }
   
   return response;
 };

@@ -23,7 +23,9 @@ const PersonalizeButton: React.FC<PersonalizeButtonProps> = ({ chapterId, onPers
     setError(null);
 
     try {
+      console.log('Personalizing chapter:', chapterId);
       const data = await personalizeContent(chapterId);
+      console.log('Personalization response:', data);
 
       if (data.success) {
         onPersonalized(data.personalized_content, {
@@ -34,8 +36,18 @@ const PersonalizeButton: React.FC<PersonalizeButtonProps> = ({ chapterId, onPers
         throw new Error('Personalization request was unsuccessful');
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to personalize content');
+      const errorMessage = err instanceof Error ? err.message : 'Failed to personalize content';
       console.error('Personalization error:', err);
+      setError(errorMessage);
+      
+      // Show more detailed error for debugging
+      if (errorMessage.includes('404')) {
+        setError('API endpoint not found. Please check if the backend is running.');
+      } else if (errorMessage.includes('401')) {
+        setError('Authentication failed. Please sign in again.');
+      } else if (errorMessage.includes('403')) {
+        setError('Access denied. Please check your permissions.');
+      }
     } finally {
       setIsLoading(false);
     }

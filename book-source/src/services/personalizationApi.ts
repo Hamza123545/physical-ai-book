@@ -31,13 +31,31 @@ export interface PersonalizeResponse {
 export const personalizeContent = async (
   chapterId: string
 ): Promise<PersonalizeResponse> => {
-  const response = await apiRequest('/api/content/personalize', {
-    method: 'POST',
-    body: JSON.stringify({
-      chapter_id: chapterId,
-    }),
-  });
-  
-  return handleApiResponse<PersonalizeResponse>(response);
+  try {
+    const response = await apiRequest('/api/content/personalize', {
+      method: 'POST',
+      body: JSON.stringify({
+        chapter_id: chapterId,
+      }),
+    });
+    
+    // Log response for debugging
+    console.log('Personalize API response status:', response.status);
+    
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({
+        error: {
+          message: `API error: ${response.status} ${response.statusText}`,
+        },
+      }));
+      console.error('Personalize API error:', errorData);
+      throw new Error(errorData.error?.message || `Failed to personalize: ${response.status} ${response.statusText}`);
+    }
+    
+    return handleApiResponse<PersonalizeResponse>(response);
+  } catch (error) {
+    console.error('Personalize API request failed:', error);
+    throw error;
+  }
 };
 
