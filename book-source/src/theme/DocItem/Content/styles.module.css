@@ -15,11 +15,241 @@
   border-color: var(--ifm-color-emphasis-200);
 }
 
+.personalizedControls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.statusBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cached {
+  padding: 0.25rem 0.75rem;
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.fresh {
+  padding: 0.25rem 0.75rem;
+  background: rgba(147, 51, 234, 0.1);
+  color: #9333ea;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.toggleButtons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.toggleButton {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-color);
+  color: var(--ifm-color-content);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+.toggleButton:hover {
+  background: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-primary);
+}
+
+.toggleButton.active {
+  background: var(--ifm-color-primary);
+  color: white;
+  border-color: var(--ifm-color-primary);
+}
+
+.resetButton {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: transparent;
+  color: var(--ifm-color-content-secondary);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+.resetButton:hover {
+  background: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-emphasis-300);
+  color: var(--ifm-color-content);
+}
+
+.metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: var(--ifm-color-emphasis-50);
+  border-radius: 6px;
+  font-size: 0.8125rem;
+}
+
+.metadataItem {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.label {
+  color: var(--ifm-color-content-secondary);
+  font-weight: 500;
+}
+
+.value {
+  color: var(--ifm-color-content);
+}
+
+.personalizedContent {
+  margin-bottom: 2rem;
+}
+
+/* Apply Docusaurus markdown styling to personalized content */
+.personalizedContent h1,
+.personalizedContent h2,
+.personalizedContent h3,
+.personalizedContent h4,
+.personalizedContent h5,
+.personalizedContent h6 {
+  color: var(--ifm-heading-color);
+  font-weight: var(--ifm-heading-font-weight);
+  line-height: var(--ifm-heading-line-height);
+  margin-bottom: var(--ifm-heading-margin-bottom);
+  margin-top: var(--ifm-heading-margin-top);
+}
+
+.personalizedContent h1 {
+  font-size: var(--ifm-h1-font-size);
+}
+
+.personalizedContent h2 {
+  font-size: var(--ifm-h2-font-size);
+}
+
+.personalizedContent h3 {
+  font-size: var(--ifm-h3-font-size);
+}
+
+.personalizedContent p {
+  margin-bottom: 1rem;
+  line-height: 1.75;
+}
+
+.personalizedContent ul,
+.personalizedContent ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.personalizedContent li {
+  margin-bottom: 0.5rem;
+}
+
+.personalizedContent code {
+  background: var(--ifm-code-background);
+  border-radius: var(--ifm-code-border-radius);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: var(--ifm-code-font-size);
+  padding: var(--ifm-code-padding-vertical) var(--ifm-code-padding-horizontal);
+}
+
+.personalizedContent pre {
+  background: var(--prism-background-color);
+  border-radius: var(--ifm-code-border-radius);
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.personalizedContent pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.9rem;
+}
+
+.personalizedContent blockquote {
+  border-left: 4px solid var(--ifm-color-primary);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: var(--ifm-color-content-secondary);
+  font-style: italic;
+}
+
+.personalizedContent a {
+  color: var(--ifm-link-color);
+  text-decoration: var(--ifm-link-decoration);
+}
+
+.personalizedContent a:hover {
+  color: var(--ifm-link-hover-color);
+  text-decoration: var(--ifm-link-hover-decoration);
+}
+
+.personalizedContent table {
+  display: block;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+}
+
+.personalizedContent th,
+.personalizedContent td {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  padding: 0.75rem;
+}
+
+.personalizedContent th {
+  background: var(--ifm-color-emphasis-100);
+  font-weight: 600;
+}
+
+.personalizedContent strong {
+  font-weight: 600;
+}
+
+.personalizedContent em {
+  font-style: italic;
+}
+
+.personalizedContent hr {
+  border: none;
+  border-top: 1px solid var(--ifm-color-emphasis-300);
+  margin: 2rem 0;
+}
+
 /* Mobile responsive */
 @media screen and (max-width: 768px) {
   .personalizeSection {
     padding: 0.75rem;
     margin-bottom: 1rem;
+  }
+  
+  .toggleButtons {
+    flex-direction: column;
+  }
+  
+  .toggleButton,
+  .resetButton {
+    width: 100%;
+  }
+  
+  .metadata {
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
 

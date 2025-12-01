@@ -6,11 +6,59 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { MessageCircle, X, Send, Trash2, Loader2, BookOpen, Sparkles } from 'lucide-react';
+import Link from '@docusaurus/Link';
+import { MessageCircle, X, Send, Trash2, Loader2, BookOpen, Sparkles, ExternalLink } from 'lucide-react';
 import type { ChatMessage, SourceCitation } from '../../types/chat';
 import { sendChatMessage, sendSelectedTextQuery, getSessionId, clearSessionId, clearChatHistory } from '../../services/chatApi';
 import { useTextSelection } from '../../hooks/useTextSelection';
 import styles from './styles.module.css';
+
+/**
+ * Convert file path to documentation URL
+ * Handles various path formats:
+ * - "D:\\QTM Work\\physical-ai-book\\book-source\\docs\\intro.md" -> "/docs/intro"
+ * - "book-source/docs/chapter-01/lesson-01.md" -> "/docs/chapter-01/lesson-01"
+ * - "docs/intro.md" -> "/docs/intro"
+ */
+const getSourceUrl = (source: SourceCitation): string => {
+  // Use file_path if available, otherwise construct from chapter/lesson
+  if (source.file_path) {
+    let path = source.file_path;
+    
+    // Normalize path separators (Windows uses backslashes)
+    path = path.replace(/\\/g, '/');
+    
+    // Remove .md and .mdx extensions
+    path = path.replace(/\.mdx?$/, '');
+    
+    // Find the "docs/" part and extract everything after it
+    // This handles absolute paths like "D:/QTM Work/.../book-source/docs/intro"
+    const docsIndex = path.lastIndexOf('/docs/');
+    if (docsIndex !== -1) {
+      path = path.substring(docsIndex + 6); // +6 to skip "/docs/"
+    } else if (path.startsWith('docs/')) {
+      path = path.substring(5); // skip "docs/"
+    }
+    
+    // Remove leading slashes
+    path = path.replace(/^\/+/, '');
+    
+    // Handle index files - remove /index suffix
+    path = path.replace(/\/index$/, '');
+    
+    // If path is empty, default to intro
+    if (!path) {
+      path = 'intro';
+    }
+    
+    return `/docs/${path}`;
+  }
+  
+  // Fallback: construct URL from chapter and lesson
+  const chapterNum = source.chapter.toString().padStart(2, '0');
+  const lessonNum = source.lesson.toString().padStart(2, '0');
+  return `/docs/chapter-${chapterNum}/lesson-${lessonNum}`;
+};
 
 export default function RAGChatbot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -174,17 +222,35 @@ export default function RAGChatbot() {
     e.nativeEvent.stopImmediatePropagation();
   };
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    // Use non-passive listener to allow preventDefault
-    e.preventDefault();
-    e.stopPropagation();
-    toggleChat();
-  };
+  // Ref for the floating button
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // Mobile touch handling with proper cleanup
+  useEffect(() => {
+    const button = buttonRef.current;
+    if (!button || typeof window === 'undefined') return;
+
+    const handleTouch = (e: TouchEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsOpen(prev => !prev);
+    };
+
+    // Add touch event with passive: false to allow preventDefault
+    button.addEventListener('touchstart', handleTouch, { passive: false });
+    button.addEventListener('touchend', (e) => e.preventDefault(), { passive: false });
+
+    return () => {
+      button.removeEventListener('touchstart', handleTouch);
+      button.removeEventListener('touchend', (e) => e.preventDefault());
+    };
+  }, []);
 
   return (
     <>
       {/* Floating Chat Button */}
       <button
+        ref={buttonRef}
         className={styles.floatingButton}
         onClick={handleButtonClick}
         onMouseDown={handleMouseDown}
@@ -198,17 +264,8 @@ export default function RAGChatbot() {
           position: 'fixed',
           bottom: '2rem',
           right: '2rem',
-          touchAction: 'manipulation', // Prevents passive listener warning
-        }}
-        ref={(button) => {
-          // Add non-passive touch event listener directly to DOM
-          if (button && typeof window !== 'undefined') {
-            button.addEventListener('touchstart', (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              toggleChat();
-            }, { passive: false });
-          }
+          touchAction: 'manipulation',
+          WebkitTapHighlightColor: 'transparent',
         }}
       >
         {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
@@ -283,15 +340,21 @@ export default function RAGChatbot() {
                         <span>Sources:</span>
                       </div>
                       {message.sources.map((source, idx) => (
-                        <div key={idx} className={styles.sourceItem}>
+                        <Link
+                          key={idx}
+                          to={getSourceUrl(source)}
+                          className={styles.sourceItem}
+                          onClick={() => setIsOpen(false)}
+                        >
                           <span className={styles.sourceChapter}>
-                            Chapter {source.chapter}, Lesson {source.lesson}
+                            <span>Chapter {source.chapter}, Lesson {source.lesson}</span>
+                            <ExternalLink size={12} className={styles.linkIcon} />
                           </span>
                           <span className={styles.sourceSection}>{source.section_title}</span>
                           <span className={styles.sourceScore}>
                             {(source.similarity_score * 100).toFixed(0)}% match
                           </span>
-                        </div>
+                        </Link>
                       ))}
                     </div>
                   )}

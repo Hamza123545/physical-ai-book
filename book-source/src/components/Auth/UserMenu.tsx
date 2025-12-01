@@ -6,14 +6,13 @@
  */
 
 import React, { useState, useRef, useEffect } from 'react';
+import Link from '@docusaurus/Link';
 import { useAuth } from '../../contexts/AuthContext';
-import UserProfileModal from '../UserProfile/UserProfileModal';
 import styles from './Auth.module.css';
 
 const UserMenu: React.FC = () => {
   const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [showProfile, setShowProfile] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   // Close menu when clicking outside
@@ -41,13 +40,14 @@ const UserMenu: React.FC = () => {
 
   if (!user) return null;
 
-  // Get user display name (full_name or email)
-  const displayName = user.full_name || user.email.split('@')[0];
+  // Get user display name (name or full_name for backwards compat, or email)
+  const displayName = user.name || (user as any).full_name || user.email.split('@')[0];
 
   // Get user initials for avatar
   const getInitials = () => {
-    if (user.full_name) {
-      const names = user.full_name.split(' ');
+    const userName = user.name || (user as any).full_name;
+    if (userName) {
+      const names = userName.split(' ');
       return names.length > 1
         ? `${names[0][0]}${names[1][0]}`.toUpperCase()
         : names[0][0].toUpperCase();
@@ -89,7 +89,7 @@ const UserMenu: React.FC = () => {
         <div className={styles.userMenuDropdown}>
           <div className={styles.userMenuHeader}>
             <div className={styles.userInfo}>
-              <p className={styles.userFullName}>{user.full_name || 'User'}</p>
+              <p className={styles.userFullName}>{user.name || (user as any).full_name || 'User'}</p>
               <p className={styles.userEmail}>{user.email}</p>
             </div>
           </div>
@@ -97,12 +97,10 @@ const UserMenu: React.FC = () => {
           <div className={styles.userMenuDivider} />
 
           <div className={styles.userMenuActions}>
-            <button
-              onClick={() => {
-                setShowProfile(true);
-                setIsOpen(false);
-              }}
+            <Link
+              to="/profile"
               className={styles.profileButton}
+              onClick={() => setIsOpen(false)}
             >
               <svg
                 width="16"
@@ -126,7 +124,7 @@ const UserMenu: React.FC = () => {
                 />
               </svg>
               Profile Settings
-            </button>
+            </Link>
             <button
               onClick={handleLogout}
               className={styles.logoutButton}
@@ -159,10 +157,6 @@ const UserMenu: React.FC = () => {
         </div>
       )}
 
-      <UserProfileModal
-        isOpen={showProfile}
-        onClose={() => setShowProfile(false)}
-      />
     </div>
   );
 };
