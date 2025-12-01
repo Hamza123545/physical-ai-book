@@ -16,10 +16,10 @@ export const getApiBaseUrl = (): string => {
     return 'http://localhost:8000';
   }
   
-  // Production: Use Render backend URL
+  // Production: Use Hugging Face Spaces backend URL
   // Note: In Docusaurus, we can't use process.env in client-side code
   // Environment variables should be set at build time via docusaurus.config.ts
-  return 'https://physical-ai-backend-9lxv.onrender.com';
+  return 'https://hamza057-aibook.hf.space';
 };
 
 export const API_BASE_URL = getApiBaseUrl();

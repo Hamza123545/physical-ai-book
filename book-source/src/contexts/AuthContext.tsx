@@ -36,7 +36,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const getApiUrl = () => {
   if (typeof window === 'undefined') return 'http://localhost:8000';
   if (window.location.hostname === 'localhost') return 'http://localhost:8000';
-  return 'https://physical-ai-backend-9lxv.onrender.com';
+  return 'https://hamza057-aibook.hf.space';
 };
 
 // Provider props

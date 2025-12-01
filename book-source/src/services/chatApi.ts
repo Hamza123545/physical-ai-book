@@ -27,8 +27,8 @@ const getApiBaseUrl = (): string => {
     return 'http://localhost:8000';
   }
   
-  // Production: Use Render backend URL
-  return 'https://physical-ai-backend-9lxv.onrender.com';
+  // Production: Use Hugging Face Spaces backend URL
+  return 'https://hamza057-aibook.hf.space';
 };
 
 const API_BASE_URL = getApiBaseUrl();

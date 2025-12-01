@@ -22,7 +22,7 @@ export default function ChatKitWidget() {
           const apiUrl = (typeof window !== 'undefined' && 
             (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'))
             ? 'http://localhost:8000'
-            : 'https://physical-ai-backend-9lxv.onrender.com';
+            : 'https://hamza057-aibook.hf.space';
           
           const response = await fetch(`${apiUrl}/api/chatkit/session`, {
             method: 'POST',
