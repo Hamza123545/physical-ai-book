@@ -68,6 +68,16 @@ export default function SignupPage(): React.ReactElement {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: 'error' | 'success' } | null>(null);
+  
+  // Personalization fields
+  const [showPersonalization, setShowPersonalization] = useState(false);
+  const [softwareExperience, setSoftwareExperience] = useState('beginner');
+  const [hardwareExperience, setHardwareExperience] = useState('beginner');
+  const [roboticsExperience, setRoboticsExperience] = useState('none');
+  const [currentRole, setCurrentRole] = useState('student');
+  const [programmingLanguages, setProgrammingLanguages] = useState('');
+  const [learningGoals, setLearningGoals] = useState('');
+  const [industry, setIndustry] = useState('');
 
   const showError = (message: string) => {
     setToast({ message, type: 'error' });
@@ -104,14 +114,27 @@ export default function SignupPage(): React.ReactElement {
     setIsLoading(true);
 
     try {
+      const signupData: any = { 
+        email, 
+        password, 
+        full_name: name || undefined 
+      };
+      
+      // Add personalization data if provided
+      if (showPersonalization && (softwareExperience || hardwareExperience || roboticsExperience || currentRole)) {
+        signupData.software_experience = softwareExperience;
+        signupData.hardware_experience = hardwareExperience;
+        signupData.robotics_experience = roboticsExperience;
+        signupData.current_role = currentRole;
+        if (programmingLanguages) signupData.programming_languages = programmingLanguages;
+        if (learningGoals) signupData.learning_goals = learningGoals;
+        if (industry) signupData.industry = industry;
+      }
+      
       const response = await fetch(`${getApiUrl()}/api/auth/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          email, 
-          password, 
-          full_name: name || undefined 
-        }),
+        body: JSON.stringify(signupData),
       });
 
       const data = await response.json();
@@ -311,6 +334,197 @@ export default function SignupPage(): React.ReactElement {
                   transition: 'all 0.2s',
                 }}
               />
+            </div>
+
+            {/* Personalization Section */}
+            <div style={{ marginBottom: '2rem', padding: '1.5rem', background: 'var(--ifm-color-emphasis-100)', borderRadius: '12px', border: '1px solid var(--ifm-color-emphasis-200)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontWeight: 500 }}>
+                  <input
+                    type="checkbox"
+                    checked={showPersonalization}
+                    onChange={(e) => setShowPersonalization(e.target.checked)}
+                    style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                  />
+                  <span>Personalize my learning experience (optional)</span>
+                </label>
+              </div>
+              
+              {showPersonalization && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+                    <div>
+                      <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 500 }}>
+                        Software Experience
+                      </label>
+                      <select
+                        value={softwareExperience}
+                        onChange={(e) => setSoftwareExperience(e.target.value)}
+                        disabled={isLoading}
+                        style={{
+                          width: '100%',
+                          padding: '0.75rem',
+                          borderRadius: '8px',
+                          border: '2px solid var(--ifm-color-emphasis-300)',
+                          fontSize: '0.9rem',
+                          background: 'var(--ifm-background-color)',
+                          color: 'var(--ifm-color-content)',
+                        }}
+                      >
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 500 }}>
+                        Hardware Experience
+                      </label>
+                      <select
+                        value={hardwareExperience}
+                        onChange={(e) => setHardwareExperience(e.target.value)}
+                        disabled={isLoading}
+                        style={{
+                          width: '100%',
+                          padding: '0.75rem',
+                          borderRadius: '8px',
+                          border: '2px solid var(--ifm-color-emphasis-300)',
+                          fontSize: '0.9rem',
+                          background: 'var(--ifm-background-color)',
+                          color: 'var(--ifm-color-content)',
+                        }}
+                      >
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 500 }}>
+                        Robotics Experience
+                      </label>
+                      <select
+                        value={roboticsExperience}
+                        onChange={(e) => setRoboticsExperience(e.target.value)}
+                        disabled={isLoading}
+                        style={{
+                          width: '100%',
+                          padding: '0.75rem',
+                          borderRadius: '8px',
+                          border: '2px solid var(--ifm-color-emphasis-300)',
+                          fontSize: '0.9rem',
+                          background: 'var(--ifm-background-color)',
+                          color: 'var(--ifm-color-content)',
+                        }}
+                      >
+                        <option value="none">None</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 500 }}>
+                        Current Role
+                      </label>
+                      <select
+                        value={currentRole}
+                        onChange={(e) => setCurrentRole(e.target.value)}
+                        disabled={isLoading}
+                        style={{
+                          width: '100%',
+                          padding: '0.75rem',
+                          borderRadius: '8px',
+                          border: '2px solid var(--ifm-color-emphasis-300)',
+                          fontSize: '0.9rem',
+                          background: 'var(--ifm-background-color)',
+                          color: 'var(--ifm-color-content)',
+                        }}
+                      >
+                        <option value="student">Student</option>
+                        <option value="professional">Professional</option>
+                        <option value="hobbyist">Hobbyist</option>
+                        <option value="researcher">Researcher</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 500 }}>
+                      Programming Languages (comma-separated)
+                    </label>
+                    <input
+                      type="text"
+                      value={programmingLanguages}
+                      onChange={(e) => setProgrammingLanguages(e.target.value)}
+                      disabled={isLoading}
+                      placeholder="e.g., Python, C++, JavaScript"
+                      style={{
+                        width: '100%',
+                        padding: '0.75rem',
+                        borderRadius: '8px',
+                        border: '2px solid var(--ifm-color-emphasis-300)',
+                        fontSize: '0.9rem',
+                        background: 'var(--ifm-background-color)',
+                        color: 'var(--ifm-color-content)',
+                      }}
+                    />
+                  </div>
+                  
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 500 }}>
+                      Learning Goals
+                    </label>
+                    <textarea
+                      value={learningGoals}
+                      onChange={(e) => setLearningGoals(e.target.value)}
+                      disabled={isLoading}
+                      placeholder="What do you want to learn?"
+                      rows={3}
+                      style={{
+                        width: '100%',
+                        padding: '0.75rem',
+                        borderRadius: '8px',
+                        border: '2px solid var(--ifm-color-emphasis-300)',
+                        fontSize: '0.9rem',
+                        background: 'var(--ifm-background-color)',
+                        color: 'var(--ifm-color-content)',
+                        resize: 'vertical',
+                        fontFamily: 'inherit',
+                      }}
+                    />
+                  </div>
+                  
+                  <div>
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 500 }}>
+                      Industry (optional)
+                    </label>
+                    <input
+                      type="text"
+                      value={industry}
+                      onChange={(e) => setIndustry(e.target.value)}
+                      disabled={isLoading}
+                      placeholder="e.g., Education, Manufacturing, Research"
+                      style={{
+                        width: '100%',
+                        padding: '0.75rem',
+                        borderRadius: '8px',
+                        border: '2px solid var(--ifm-color-emphasis-300)',
+                        fontSize: '0.9rem',
+                        background: 'var(--ifm-background-color)',
+                        color: 'var(--ifm-color-content)',
+                      }}
+                    />
+                  </div>
+                  
+                  <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--ifm-color-content-secondary)', fontStyle: 'italic' }}>
+                    You can update these settings later in your profile.
+                  </p>
+                </div>
+              )}
             </div>
 
             <button

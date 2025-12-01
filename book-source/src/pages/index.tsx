@@ -10,80 +10,95 @@ import styles from "./index.module.css";
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
-  // Use useBaseUrl for proper baseUrl handling in Docusaurus
   const imageUrl = useBaseUrl("/img/main.jpeg");
+  
   return (
     <header className={styles.heroBanner}>
-      <div className={styles.heroGradient} />
+      <div className={styles.heroBackground}>
+        <div className={styles.heroGradient1} />
+        <div className={styles.heroGradient2} />
+        <div className={styles.heroGradient3} />
+      </div>
+      
       <div className="container">
         <div className={styles.heroContent}>
-          {/* Left side - Book Cover */}
-          <div className={styles.heroImageContainer}>
-            <img
-              src={imageUrl}
-              alt="Physical AI & Humanoid Robotics Textbook Cover"
-              className={styles.heroBookCover}
-              loading="eager"
-              width="500"
-              height="700"
-            />
-          </div>
-
-          {/* Right side - Content */}
-          <div className={styles.heroTextContent}>
+          {/* Left Side - Content */}
+          <div className={styles.heroLeft}>
             <div className={styles.heroLabel}>
-              Hamza Swati - AI-Native Book Series
+              <span className={styles.labelDot}></span>
+              AI-Native Robotics Learning Platform
             </div>
+            
             <Heading as="h1" className={styles.heroTitle}>
-              Physical AI & Humanoid Robotics
+              Master Humanoid Robotics
+              <br />
+              <span className={styles.heroTitleAccent}>with AI Co-Learning</span>
             </Heading>
+            
             <p className={styles.heroSubtitle}>
-              Building Intelligent Humanoid Robots with AI –{" "}
-              <strong>Spec Driven Reusable Intelligence</strong>
+              Build intelligent robots using <strong>Spec-Driven Development</strong> and 
+              learn alongside AI. From ROS 2 to Vision-Language-Action models—everything you need in one place.
             </p>
-
-            <div className={styles.heroBadges}>
-              <span className={styles.badge}>
-                <span className={styles.badgeIcon}>✨</span>
-                Open Source
-              </span>
-              <span className={styles.badge}>
-                <span className={styles.badgeIcon}>🤝</span>
-                Co-Learning with AI
-              </span>
-              <span className={styles.badge}>
-                <span className={styles.badgeIcon}>🎯</span>
-                Spec-Driven Development
-              </span>
+            
+            <div className={styles.heroStats}>
+              <div className={styles.statBox}>
+                <div className={styles.statNumber}>7</div>
+                <div className={styles.statLabel}>Chapters</div>
+              </div>
+              <div className={styles.statBox}>
+                <div className={styles.statNumber}>39</div>
+                <div className={styles.statLabel}>Lessons</div>
+              </div>
+              <div className={styles.statBox}>
+                <div className={styles.statNumber}>100+</div>
+                <div className={styles.statLabel}>Exercises</div>
+              </div>
             </div>
 
             <div className={styles.heroButtons}>
               <Link
-                className={clsx(
-                  "button button--primary button--lg",
-                  styles.ctaButton
-                )}
+                className={clsx("button button--primary button--lg", styles.primaryBtn)}
                 to="/docs/intro"
               >
-                <span className={styles.buttonContent}>
-                  <span className={styles.buttonText}>Start Learning</span>
-                  <span className={styles.buttonIcon}>🤖</span>
-                </span>
+                <span>Start Learning Now</span>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </Link>
               <Link
-                className={clsx(
-                  "button button--outline button--lg",
-                  styles.secondaryButton
-                )}
+                className={clsx("button button--outline button--lg", styles.secondaryBtn)}
                 href="https://github.com/Hamza123545/physical-ai-book"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <span className={styles.buttonContent}>
-                  <span className={styles.buttonText}>View on GitHub</span>
-                  <span className={styles.buttonIcon}>⭐</span>
-                </span>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M10 2C5.58 2 2 5.58 2 10C2 13.42 4.16 16.34 7.25 17.75C7.75 17.84 7.92 17.5 7.92 17.21C7.92 16.96 7.91 16.13 7.91 15.25C5.5 15.75 4.84 14.67 4.67 14.13C4.58 13.84 4.08 12.84 3.58 12.59C3.17 12.38 2.75 11.84 3.58 11.84C4.34 11.84 4.84 12.5 5.08 12.84C5.5 13.59 6.34 13.34 7.92 12.84C8 12.25 8.25 11.84 8.5 11.59C6.17 11.25 3.75 10.25 3.75 7.34C3.75 6.5 4.08 5.75 4.67 5.17C4.58 4.92 4.25 4.17 4.75 3.13C4.75 3.13 5.34 2.92 7.92 4.17C8.67 3.96 9.5 3.84 10.34 3.84C11.17 3.84 12 3.96 12.75 4.17C15.34 2.92 15.92 3.13 15.92 3.13C16.42 4.17 16.08 4.92 16 5.17C16.58 5.75 16.92 6.5 16.92 7.34C16.92 10.25 14.5 11.25 12.17 11.59C12.5 11.92 12.75 12.5 12.75 13.34C12.75 14.5 12.75 15.42 12.75 17.21C12.75 17.5 12.92 17.84 13.42 17.75C16.5 16.34 18.67 13.42 18.67 10C18.67 5.58 15.08 2 10.67 2H10Z" fill="currentColor"/>
+                </svg>
+                <span>View on GitHub</span>
               </Link>
+            </div>
+          </div>
+
+          {/* Right Side - Book Cover */}
+          <div className={styles.heroRight}>
+            <div className={styles.bookContainer}>
+              <div className={styles.bookGlow}></div>
+              <img
+                src={imageUrl}
+                alt="Physical AI & Humanoid Robotics Textbook"
+                className={styles.bookImage}
+                loading="eager"
+              />
+              <div className={styles.bookBadges}>
+                <div className={styles.bookBadge}>
+                  <span className={styles.badgeIcon}>✨</span>
+                  <span>Open Source</span>
+                </div>
+                <div className={styles.bookBadge}>
+                  <span className={styles.badgeIcon}>🤖</span>
+                  <span>AI-Powered</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -96,525 +111,170 @@ function AISpectrumSection() {
   return (
     <section className={styles.spectrumSection}>
       <div className="container">
-        <div className={styles.spectrumHeader}>
-          <div className={styles.spectrumLabel}>
-            Understanding AI Development
-          </div>
-          <Heading as="h2" className={styles.spectrumTitle}>
-            The AI Development Spectrum
+        <div className={styles.sectionHeader}>
+          <div className={styles.sectionBadge}>The AI Spectrum</div>
+          <Heading as="h2" className={styles.sectionTitle}>
+            Three Ways AI Transforms Robotics Development
           </Heading>
-          <p className={styles.spectrumSubtitle}>
-            Three distinct approaches to AI in robotics development. This book
-            teaches you both AI-Driven and AI-Native development for building intelligent robots.
+          <p className={styles.sectionDescription}>
+            Understand how AI can assist, drive, or become the core of your robotics projects
           </p>
         </div>
 
-        <div className={styles.spectrumCards}>
-          {/* AI Assisted */}
+        <div className={styles.spectrumGrid}>
           <div className={styles.spectrumCard}>
-            <div className={styles.spectrumCardHeader}>
-              <div className={styles.spectrumIcon}>🛠️</div>
-              <h3 className={styles.spectrumCardTitle}>AI Assisted</h3>
-              <div className={styles.spectrumCardSubtitle}>AI as Helper</div>
+            <div className={styles.cardHeader}>
+              <div className={styles.cardNumber}>01</div>
+              <div className={styles.cardIcon}>🛠️</div>
             </div>
-            <p className={styles.spectrumCardDescription}>
-              AI enhances your productivity with code completion, debugging
-              assistance, and documentation generation.
+            <h3 className={styles.cardTitle}>AI Assisted</h3>
+            <p className={styles.cardSubtitle}>AI as Helper</p>
+            <p className={styles.cardText}>
+              Boost productivity with AI-powered code completion, debugging assistance, and documentation.
             </p>
-            <ul className={styles.spectrumCardList}>
+            <ul className={styles.cardFeatures}>
               <li>Code completion & suggestions</li>
               <li>Bug detection & debugging</li>
               <li>Documentation generation</li>
             </ul>
-            <div className={styles.spectrumCardExample}>
-              <strong>Example:</strong> Using GitHub Copilot to build ROS 2 nodes faster
-            </div>
           </div>
 
-          {/* AI Driven */}
-          <div
-            className={clsx(styles.spectrumCard, styles.spectrumCardHighlight)}
-          >
-            <div className={styles.spectrumBadge}>Focus of This Book</div>
-            <div className={styles.spectrumCardHeader}>
-              <div className={styles.spectrumIcon}>🚀</div>
-              <h3 className={styles.spectrumCardTitle}>AI Driven</h3>
-              <div className={styles.spectrumCardSubtitle}>
-                AI as Co-Creator
-              </div>
+          <div className={clsx(styles.spectrumCard, styles.spectrumCardPrimary)}>
+            <div className={styles.primaryBadge}>Book Focus</div>
+            <div className={styles.cardHeader}>
+              <div className={styles.cardNumber}>02</div>
+              <div className={styles.cardIcon}>🚀</div>
             </div>
-            <p className={styles.spectrumCardDescription}>
-              AI generates significant code from specifications. You act as
-              architect, director, and reviewer.
+            <h3 className={styles.cardTitle}>AI Driven</h3>
+            <p className={styles.cardSubtitle}>AI as Co-Creator</p>
+            <p className={styles.cardText}>
+              AI generates code from specifications. You architect, direct, and review—AI implements.
             </p>
-            <ul className={styles.spectrumCardList}>
+            <ul className={styles.cardFeatures}>
               <li>Code generation from specs</li>
               <li>Automated testing & optimization</li>
               <li>Architecture from requirements</li>
             </ul>
-            <div className={styles.spectrumCardExample}>
-              <strong>Example:</strong> Writing a spec for humanoid navigation, AI
-              generates complete Nav2 configuration and ROS 2 nodes
-            </div>
           </div>
 
-          {/* AI Native */}
-          <div
-            className={clsx(styles.spectrumCard, styles.spectrumCardHighlight)}
-          >
-            <div className={styles.spectrumBadge}>Focus of This Book</div>
-            <div className={styles.spectrumCardHeader}>
-              <div className={styles.spectrumIcon}>🤖</div>
-              <h3 className={styles.spectrumCardTitle}>AI Native</h3>
-              <div className={styles.spectrumCardSubtitle}>
-                AI IS the Robot's Intelligence
-              </div>
+          <div className={clsx(styles.spectrumCard, styles.spectrumCardPrimary)}>
+            <div className={styles.primaryBadge}>Book Focus</div>
+            <div className={styles.cardHeader}>
+              <div className={styles.cardNumber}>03</div>
+              <div className={styles.cardIcon}>🤖</div>
             </div>
-            <p className={styles.spectrumCardDescription}>
-              Robots architected around AI capabilities. Vision-Language-Action models
-              and RL agents are core components.
+            <h3 className={styles.cardTitle}>AI Native</h3>
+            <p className={styles.cardSubtitle}>AI IS the Intelligence</p>
+            <p className={styles.cardText}>
+              Robots built around AI capabilities. Vision-Language-Action models and RL agents are core components.
             </p>
-            <ul className={styles.spectrumCardList}>
+            <ul className={styles.cardFeatures}>
               <li>Vision-Language-Action (VLA) models</li>
               <li>Reinforcement learning for locomotion</li>
               <li>LLM-based cognitive planning</li>
             </ul>
-            <div className={styles.spectrumCardExample}>
-              <strong>Example:</strong> Humanoid robot that understands voice commands
-              and executes complex tasks autonomously
-            </div>
-          </div>
-        </div>
-
-        {/* Progression visualization */}
-        <div className={styles.spectrumFlow}>
-          <div className={styles.spectrumFlowTrack}>
-            <div className={styles.spectrumFlowStep}>
-              <div className={styles.flowStepCircle}>
-                <span className={styles.flowStepNumber}>1</span>
-              </div>
-              <div className={styles.flowStepContent}>
-                <div className={styles.flowStepTitle}>AI Assisted</div>
-                <div className={styles.flowStepSubtitle}>Helper</div>
-              </div>
-            </div>
-
-            <div className={styles.spectrumFlowLine}>
-              <div className={styles.flowLineProgress}></div>
-            </div>
-
-            <div
-              className={clsx(styles.spectrumFlowStep, styles.flowStepActive)}
-            >
-              <div className={styles.flowStepCircle}>
-                <span className={styles.flowStepNumber}>2</span>
-              </div>
-              <div className={styles.flowStepContent}>
-                <div className={styles.flowStepTitle}>AI Driven</div>
-                <div className={styles.flowStepSubtitle}>Co-Creator</div>
-              </div>
-            </div>
-
-            <div className={styles.spectrumFlowLine}>
-              <div className={styles.flowLineProgress}></div>
-            </div>
-
-            <div
-              className={clsx(styles.spectrumFlowStep, styles.flowStepActive)}
-            >
-              <div className={styles.flowStepCircle}>
-                <span className={styles.flowStepNumber}>3</span>
-              </div>
-              <div className={styles.flowStepContent}>
-                <div className={styles.flowStepTitle}>AI Native</div>
-                <div className={styles.flowStepSubtitle}>Core System</div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function Feature({
-  title,
-  description,
-  icon,
-  featured,
-}: {
-  title: string;
-  description: string;
-  icon: string;
-  featured?: boolean;
-}) {
-  return (
-    <div className={clsx(styles.feature, featured && styles.featureFeatured)}>
-      {featured && <div className={styles.featureBadge}>Most Popular</div>}
-      <div className={styles.featureIconWrapper}>
-        <div className={styles.featureIcon}>{icon}</div>
-      </div>
-      <h3 className={styles.featureTitle}>{title}</h3>
-      <p className={styles.featureDescription}>{description}</p>
-      <div className={styles.featureAccent} />
-    </div>
   );
 }
 
 function FeaturesSection() {
   return (
-    <section className={styles.features}>
+    <section className={styles.featuresSection}>
       <div className="container">
-        <div className={styles.featuresHeader}>
-          <div className={styles.featuresLabel}>Core Pillars</div>
-          <Heading as="h2" className={styles.featuresHeading}>
-            What Makes This Book Different
+        <div className={styles.sectionHeader}>
+          <div className={styles.sectionBadge}>Why This Book?</div>
+          <Heading as="h2" className={styles.sectionTitle}>
+            Everything You Need to Build Intelligent Robots
           </Heading>
-          <p className={styles.featuresSubheading}>
-            A comprehensive, hands-on approach to building intelligent humanoid robots
-            using AI-native development
-          </p>
         </div>
 
         <div className={styles.featuresGrid}>
-          <Feature
-            icon="🤖"
-            title="Co-Learning with AI"
-            description="Learn alongside AI using the Three Roles Framework: AI as Teacher, Copilot, and Evaluator throughout your robotics journey."
-            featured={true}
-          />
-          <Feature
-            icon="🐍"
-            title="Browser-Based Python"
-            description="All exercises run in your browser via Pyodide. No installation required - learn robotics algorithms with instant feedback."
-          />
-          <Feature
-            icon="📋"
-            title="Spec-Driven Development"
-            description="This textbook was built using SpecKit Plus. Learn the same AI-driven methodology used to create it."
-          />
-          <Feature
-            icon="🦾"
-            title="Complete Robotics Stack"
-            description="Master ROS 2, Gazebo, Unity, NVIDIA Isaac, Nav2, and Vision-Language-Action models from foundations to deployment."
-          />
-          <Feature
-            icon="🏗️"
-            title="Humanoid Robot Focus"
-            description="Build bipedal locomotion, balance control, manipulation systems, and natural human-robot interaction."
-          />
-          <Feature
-            icon="🚀"
-            title="13-Week Learning Journey"
-            description="7 chapters, 39 lessons with 100+ interactive exercises. Complete the Capstone: build an autonomous humanoid robot."
-            featured={true}
-          />
+          <div className={clsx(styles.featureCard, styles.featureCardHighlight)}>
+            <div className={styles.featureHighlightBadge}>Most Popular</div>
+            <div className={styles.featureIcon}>🤖</div>
+            <h3 className={styles.featureTitle}>Co-Learning with AI</h3>
+            <p className={styles.featureText}>
+              Learn alongside AI using the Three Roles Framework: AI as Teacher, Copilot, and Evaluator. 
+              Experience a new way of learning where AI adapts to your pace and style.
+            </p>
+          </div>
+
+          <div className={styles.featureCard}>
+            <div className={styles.featureIcon}>🐍</div>
+            <h3 className={styles.featureTitle}>Browser-Based Python</h3>
+            <p className={styles.featureText}>
+              All exercises run in your browser via Pyodide. No installation required—learn robotics algorithms with instant feedback.
+            </p>
+          </div>
+
+          <div className={styles.featureCard}>
+            <div className={styles.featureIcon}>📋</div>
+            <h3 className={styles.featureTitle}>Spec-Driven Development</h3>
+            <p className={styles.featureText}>
+              This textbook was built using SpecKit Plus. Learn the same AI-driven methodology used to create it.
+            </p>
+          </div>
+
+          <div className={styles.featureCard}>
+            <div className={styles.featureIcon}>🦾</div>
+            <h3 className={styles.featureTitle}>Complete Robotics Stack</h3>
+            <p className={styles.featureText}>
+              Master ROS 2, Gazebo, Unity, NVIDIA Isaac, Nav2, and Vision-Language-Action models from foundations to deployment.
+            </p>
+          </div>
+
+          <div className={styles.featureCard}>
+            <div className={styles.featureIcon}>🏗️</div>
+            <h3 className={styles.featureTitle}>Humanoid Robot Focus</h3>
+            <p className={styles.featureText}>
+              Build bipedal locomotion, balance control, manipulation systems, and natural human-robot interaction.
+            </p>
+          </div>
+
+          <div className={clsx(styles.featureCard, styles.featureCardHighlight)}>
+            <div className={styles.featureHighlightBadge}>Capstone Project</div>
+            <div className={styles.featureIcon}>🚀</div>
+            <h3 className={styles.featureTitle}>13-Week Learning Journey</h3>
+            <p className={styles.featureText}>
+              7 chapters, 39 lessons with 100+ interactive exercises. Complete the Capstone: build an autonomous humanoid robot from scratch.
+            </p>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function MaturityLevelsSection() {
+function CTASection() {
   return (
-    <section className={styles.maturitySection}>
+    <section className={styles.ctaSection}>
+      <div className={styles.ctaBackground}></div>
       <div className="container">
-        <div className={styles.maturityHeader}>
-          <div className={styles.maturityLabel}>Your AI Journey</div>
-          <Heading as="h2" className={styles.maturityTitle}>
-            Organizational AI Maturity Levels
+        <div className={styles.ctaContent}>
+          <div className={styles.ctaIcon}>🎓</div>
+          <Heading as="h2" className={styles.ctaTitle}>
+            Ready to Build the Future?
           </Heading>
-          <p className={styles.maturitySubtitle}>
-            Where does your organization stand? Understanding these levels helps
-            you chart your path forward.
+          <p className={styles.ctaDescription}>
+            Join thousands of learners mastering AI-native robotics development. 
+            Start your journey today and build intelligent robots that change the world.
           </p>
-        </div>
-
-        <div className={styles.maturityLevels}>
-          {/* Level 1 */}
-          <div className={styles.maturityLevel}>
-            <div className={styles.maturityLevelNumber}>1</div>
-            <div className={styles.maturityLevelHeader}>
-              <div>
-                <h3 className={styles.maturityLevelTitle}>AI Awareness</h3>
-                <div className={styles.maturityLevelSubtitle}>
-                  Experimenting
-                </div>
-              </div>
-              <div className={styles.maturityLevelImpact}>
-                10-20% productivity gains
-              </div>
-            </div>
-            <p className={styles.maturityLevelDescription}>
-              Individual developers experimenting with AI coding tools. Early AI
-              Assisted Development.
-            </p>
-            <div className={styles.maturityLevelApproach}>
-              <strong>Approach:</strong> AI Assisted (Individual)
-            </div>
-          </div>
-
-          {/* Level 2 */}
-          <div className={styles.maturityLevel}>
-            <div className={styles.maturityLevelNumber}>2</div>
-            <div className={styles.maturityLevelHeader}>
-              <div>
-                <h3 className={styles.maturityLevelTitle}>AI Adoption</h3>
-                <div className={styles.maturityLevelSubtitle}>
-                  Standardizing
-                </div>
-              </div>
-              <div className={styles.maturityLevelImpact}>
-                30-40% productivity boost
-              </div>
-            </div>
-            <p className={styles.maturityLevelDescription}>
-              Organization-wide adoption with governance. Established guidelines
-              and security policies.
-            </p>
-            <div className={styles.maturityLevelApproach}>
-              <strong>Approach:</strong> AI Assisted (Team)
-            </div>
-          </div>
-
-          {/* Level 3 */}
-          <div
-            className={clsx(
-              styles.maturityLevel,
-              styles.maturityLevelHighlight
-            )}
-          >
-            <div className={styles.maturityBadge}>BOOK FOCUS</div>
-            <div className={styles.maturityLevelNumber}>3</div>
-            <div className={styles.maturityLevelHeader}>
-              <div>
-                <h3 className={styles.maturityLevelTitle}>AI Integration</h3>
-                <div className={styles.maturityLevelSubtitle}>
-                  Transforming Workflows
-                </div>
-              </div>
-              <div className={styles.maturityLevelImpact}>
-                2-3x faster development
-              </div>
-            </div>
-            <p className={styles.maturityLevelDescription}>
-              AI-Driven Development practices. Specs become living
-              documentation. Workflows redesigned around AI collaboration.
-            </p>
-            <div className={styles.maturityLevelApproach}>
-              <strong>Approach:</strong> AI Driven (Workflow)
-            </div>
-          </div>
-
-          {/* Level 4 */}
-          <div
-            className={clsx(
-              styles.maturityLevel,
-              styles.maturityLevelHighlight
-            )}
-          >
-            <div className={styles.maturityBadge}>BOOK FOCUS</div>
-            <div className={styles.maturityLevelNumber}>4</div>
-            <div className={styles.maturityLevelHeader}>
-              <div>
-                <h3 className={styles.maturityLevelTitle}>
-                  AI-Native Products
-                </h3>
-                <div className={styles.maturityLevelSubtitle}>
-                  Building Intelligence
-                </div>
-              </div>
-              <div className={styles.maturityLevelImpact}>
-                New capabilities unlocked
-              </div>
-            </div>
-            <p className={styles.maturityLevelDescription}>
-              Products where AI/LLMs are core components. Agent orchestration,
-              natural language interfaces, intelligent systems.
-            </p>
-            <div className={styles.maturityLevelApproach}>
-              <strong>Approach:</strong> AI Native (Product)
-            </div>
-          </div>
-
-          {/* Level 5 */}
-          <div className={styles.maturityLevel}>
-            <div className={styles.maturityLevelNumber}>5</div>
-            <div className={styles.maturityLevelHeader}>
-              <div>
-                <h3 className={styles.maturityLevelTitle}>
-                  AI-First Enterprise
-                </h3>
-                <div className={styles.maturityLevelSubtitle}>
-                  Living in the Future
-                </div>
-              </div>
-              <div className={styles.maturityLevelImpact}>10x productivity</div>
-            </div>
-            <p className={styles.maturityLevelDescription}>
-              Entire organization AI-native. Custom models, self-improving
-              systems, AI embedded in every aspect.
-            </p>
-            <div className={styles.maturityLevelApproach}>
-              <strong>Approach:</strong> AI Native (Enterprise)
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.maturityCTA}>
-          <p className={styles.maturityCTAText}>
-            <strong>This book prepares you for Levels 3-4:</strong> Master
-            AI-Driven workflows and build AI-Native products
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ParadigmShift() {
-  return (
-    <section className={styles.paradigmSection}>
-      <div className="container">
-        <div className={styles.paradigmContent}>
-          <div className={styles.paradigmHeader}>
-            <div className={styles.paradigmLabel}>The Great Shift</div>
-            <Heading as="h2" className={styles.paradigmTitle}>
-              From Automation to Intelligence
-              <br />
-              <span className={styles.paradigmTitleAccent}>
-                From Coding to Co-Creating
-              </span>
-            </Heading>
-            <p className={styles.paradigmSubtitle}>
-              AI-native development is not about replacing developers—it's about
-              amplifying intelligence. Learn to collaborate with reasoning
-              entities that learn with you.
-            </p>
-          </div>
-
-          <div className={styles.comparisonGrid}>
-            {/* Traditional Card */}
-            <div className={styles.comparisonCard}>
-              <div className={styles.comparisonIconWrapper}>
-                <div className={styles.comparisonIcon}>📚</div>
-              </div>
-              <div className={styles.comparisonLabel}>
-                Traditional Development
-              </div>
-              <div className={styles.comparisonDescription}>
-                The automation era
-              </div>
-              <ul className={styles.comparisonList}>
-                <li>
-                  <span className={styles.comparisonItemTitle}>
-                    Instruction-Based
-                  </span>
-                  Tell computers exactly what to do with precise syntax
-                </li>
-                <li>
-                  <span className={styles.comparisonItemTitle}>
-                    Solo Coding
-                  </span>
-                  Developer writes every line manually
-                </li>
-                <li>
-                  <span className={styles.comparisonItemTitle}>
-                    Documentation as Afterthought
-                  </span>
-                  Specs are static contracts written post-facto
-                </li>
-                <li>
-                  <span className={styles.comparisonItemTitle}>
-                    Linear Learning
-                  </span>
-                  Learn syntax → Build simple projects → Slowly scale
-                </li>
-                <li>
-                  <span className={styles.comparisonItemTitle}>Code-First</span>
-                  Focus on implementation details from day one
-                </li>
-              </ul>
-            </div>
-
-            {/* VS Divider */}
-            <div className={styles.comparisonDivider}>
-              <div className={styles.comparisonVS}>VS</div>
-              <div className={styles.comparisonArrow}>→</div>
-            </div>
-
-            {/* AI-Native Card */}
-            <div
-              className={clsx(
-                styles.comparisonCard,
-                styles.comparisonCardHighlight
-              )}
+          <div className={styles.ctaButtons}>
+            <Link
+              className={clsx("button button--primary button--lg", styles.ctaPrimaryBtn)}
+              to="/docs/intro"
             >
-              <div className={styles.comparisonIconWrapper}>
-                <div className={styles.comparisonIcon}>🤖</div>
-              </div>
-              <div className={styles.comparisonLabel}>AI-Native Way</div>
-              <div className={styles.comparisonDescription}>
-                The intelligence era
-              </div>
-              <ul className={styles.comparisonList}>
-                <li>
-                  <span className={styles.comparisonItemTitle}>
-                    Intent-Based
-                  </span>
-                  Describe what you want; AI reasons how to build it
-                </li>
-                <li>
-                  <span className={styles.comparisonItemTitle}>
-                    Co-Learning Partnership
-                  </span>
-                  You and AI teach each other through iteration
-                </li>
-                <li>
-                  <span className={styles.comparisonItemTitle}>
-                    Specs as Living Blueprints
-                  </span>
-                  Specifications drive code, tests, and documentation
-                </li>
-                <li>
-                  <span className={styles.comparisonItemTitle}>
-                    Production-First Learning
-                  </span>
-                  Build real agentic systems from day one
-                </li>
-                <li>
-                  <span className={styles.comparisonItemTitle}>
-                    Architecture-First
-                  </span>
-                  Design intelligent collaborations, not just code
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Bottom CTA */}
-          <div className={styles.paradigmCTA}>
-            <div className={styles.paradigmCTAContent}>
-              <div className={styles.paradigmCTAIcon}>🌱</div>
-              <div className={styles.paradigmCTAText}>
-                <h3 className={styles.paradigmCTATitle}>
-                  Ready to Co-Learn with AI?
-                </h3>
-                <p className={styles.paradigmCTADescription}>
-                  Join the revolution where coding becomes conversation and
-                  software becomes alive
-                </p>
-              </div>
-              <Link
-                className={clsx(
-                  "button button--primary button--lg",
-                  styles.paradigmCTAButton
-                )}
-                to="/docs/intro"
-              >
-                Begin Your Robotics Journey
-              </Link>
-            </div>
+              Begin Learning Journey
+            </Link>
+            <Link
+              className={clsx("button button--outline button--lg", styles.ctaSecondaryBtn)}
+              to="/profile"
+            >
+              Set Your Learning Profile
+            </Link>
           </div>
         </div>
       </div>
@@ -632,8 +292,7 @@ export default function Home(): ReactNode {
       <HomepageHeader />
       <AISpectrumSection />
       <FeaturesSection />
-      <MaturityLevelsSection />
-      <ParadigmShift />
+      <CTASection />
     </Layout>
   );
 }

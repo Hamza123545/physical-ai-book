@@ -4,7 +4,9 @@
 **Workflow**: `/sp.plan` (after `/sp.specify`)  
 **Input**: `specs/rag-chatbot/spec.md`  
 **Status**: ✅ Complete  
-**Date**: 2025-01-29
+**Date**: 2025-01-29  
+**Implemented By**: Claude (Anthropic) + SpecKit Plus  
+**Completion Date**: 2025-12-01
 
 ---
 

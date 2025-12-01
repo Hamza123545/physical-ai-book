@@ -1,5 +1,8 @@
 # Tasks: RAG Chatbot for Physical AI Textbook
 
+**Created Using**: SpecKit Plus + Claude Code  
+**Implemented By**: Claude (Anthropic) + SpecKit Plus  
+**Completion Date**: 2025-12-01  
 **Input**: Design documents from `/specs/main/`
 **Prerequisites**: plan.md (created), spec.md (requirements documented in plan)
 
