@@ -14,7 +14,6 @@ import NavbarItem from '@theme/NavbarItem';
 import NavbarColorModeToggle from '@theme/Navbar/ColorModeToggle';
 import NavbarMobileSidebarToggle from '@theme/Navbar/MobileSidebar/Toggle';
 import NavbarLogo from '@theme/Navbar/Logo';
-import NavbarSearch from '@theme/Navbar/Search';
 import AuthButtons from '@/components/Auth/AuthButtons';
 import styles from './styles.module.css';
 
@@ -79,8 +78,6 @@ export default function NavbarContent(): React.ReactElement {
   const items = useNavbarItems();
   const [leftItems, rightItems] = splitNavbarItems(items);
 
-  const searchBarItem = items.find((item: any) => item.type === 'search');
-
   return (
     <NavbarContentLayout
       left={
@@ -94,11 +91,6 @@ export default function NavbarContent(): React.ReactElement {
         <>
           <NavbarItems items={rightItems} />
           <NavbarColorModeToggle className={styles.colorModeToggle} />
-          {!searchBarItem && (
-            <NavbarSearch>
-              <div className="navbar__search-input" />
-            </NavbarSearch>
-          )}
         </>
       }
     />

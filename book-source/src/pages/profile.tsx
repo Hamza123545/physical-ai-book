@@ -7,6 +7,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Layout from '@theme/Layout';
+import Link from '@docusaurus/Link';
 import { useHistory } from '@docusaurus/router';
 import { useAuth } from '../contexts/AuthContext';
 import { getUserBackground, submitUserBackground, type UserBackground, type UserBackgroundCreate } from '../services/userApi';
@@ -382,9 +383,9 @@ export default function ProfilePage(): React.ReactElement {
                 <span style={{ fontSize: '3rem' }}>🔒</span>
                 <h3>Please Log In</h3>
                 <p>You need to be logged in to manage your profile.</p>
-                <a href="/login" style={styles.loginButton}>
+                <Link to="/login" style={styles.loginButton}>
                   Go to Login
-                </a>
+                </Link>
               </div>
             ) : loading ? (
               <div style={styles.loading}>
